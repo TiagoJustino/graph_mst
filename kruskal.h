@@ -2,7 +2,9 @@
 #define KRUSKAL_H
 
 #include "graph.h"
+#include "edge.h"
+#include <vector>
 
-Graph kruskal(Graph& g);
+vector<Edge> kruskal(Graph& g);
 
 #endif // KRUSKAL_H

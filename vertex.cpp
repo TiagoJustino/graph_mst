@@ -10,7 +10,7 @@ Vertex::Vertex(const Vertex &vertex) :
 {
 }
 
-mpf_class Vertex::getId()
+int Vertex::getId()
 {
     return this->id;
 }

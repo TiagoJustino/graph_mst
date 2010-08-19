@@ -14,6 +14,7 @@ public:
     Vertex getV1();
     Vertex getV2();
     mpz_class getCost();
+    bool operator>(const Edge& other) const;
 };
 
 #endif // EDGE_H

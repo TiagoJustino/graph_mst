@@ -6,11 +6,12 @@
 class Vertex
 {
 private:
-    mpf_class id, x, y;
+    int id;
+    mpf_class x, y;
 public:
-    Vertex(mpf_class id, mpf_class x, mpf_class y);
+    Vertex(int id, mpf_class x, mpf_class y);
     Vertex(const Vertex &vertex);
-    mpf_class getId();
+    int getId();
     mpf_class getX();
     mpf_class getY();
 };

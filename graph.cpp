@@ -24,32 +24,45 @@ Graph::Graph(QFile *f)
     fin >> type;
     fin >> mpz_str; no_edges = mpz_str.toStdString();
     for (mpz_class i(0); i < no_vertices; ++i) {
-        mpz_class id, x, y;
-        fin >> mpz_str; id = mpz_str.toStdString();
+        int id;
+        mpz_class x, y;
+        fin >> id;
         fin >> mpz_str; x = mpz_str.toStdString();
         fin >> mpz_str; y = mpz_str.toStdString();
-        this->vertices.append(Vertex(id, x, y));
+        this->vertices.push_back(Vertex(id, x, y));
     }
     if (type == 1) {
         for (mpz_class i(0); i < no_edges; ++i) {
-            QString v1, v2;
+            int v1, v2;
             fin >> v1;
             fin >> v2;
             fin >> mpz_str;
             mpz_class cost(mpz_str.toStdString());
-            Edge edge(this->findVertexById(mpz_class(v1.toStdString())),
-                      this->findVertexById(mpz_class(v2.toStdString())),
+            Edge edge(this->findVertexById(v1),
+                      this->findVertexById(v2),
                       cost);
-            this->edges.append(edge);
+            this->edges.push_back(edge);
         }
     }
     f->close();
 }
 
-Vertex Graph::findVertexById(mpz_class id)
+Vertex Graph::findVertexById(int id)
 {
+    Vertex not_found(-1, 0, 0);
     foreach(Vertex v, this->vertices) {
         if (v.getId() == id)
             return v;
     }
+    return not_found; 
+}
+
+vector<Edge> Graph::getEdges()
+{
+    return this->edges;
+}
+
+int Graph::order()
+{
+    return this->vertices.size();
 }

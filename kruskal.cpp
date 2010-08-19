@@ -3,13 +3,26 @@
 #include "edge.h"
 #include <vector>
 #include <algorithm>
+#include <functional>
 
 using std::vector;
+using std::greater;
 
-Graph kruskal(Graph& g)
+vector<Edge> kruskal(Graph& g)
 {
-    vector<Edge> e = g.getEdges();
-    make_heap(e.begin(), e.end()); 
+    vector<Edge> l;
+    vector<Edge> heap = g.getEdges();
+    make_heap(heap.begin(), heap.end(), greater<Edge>()); 
+    int n = g.order() - 1;
 
-    return g;
+    while(n and !heap.empty()) {
+        pop_heap(heap.begin(), heap.end(), greater<Edge>());
+        Edge e(heap.pop_back());
+        if(e.getV1().disjointSet() == e.getV2().disjointSet())
+            continue;
+        l.push_back(e);
+        n--;
+    }
+
+    return l;
 }
