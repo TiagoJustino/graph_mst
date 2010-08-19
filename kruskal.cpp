@@ -17,7 +17,8 @@ vector<Edge> kruskal(Graph& g)
 
     while(n and !heap.empty()) {
         pop_heap(heap.begin(), heap.end(), greater<Edge>());
-        Edge e(heap.pop_back());
+        Edge e(heap.back());
+        heap.pop_back();
         if(e.getV1().disjointSet() == e.getV2().disjointSet())
             continue;
         l.push_back(e);

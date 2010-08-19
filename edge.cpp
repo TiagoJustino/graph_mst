@@ -20,7 +20,6 @@ mpz_class Edge::getCost()
     return this->cost;
 }
 
-inline
 bool Edge::operator>(const Edge& other) const
 {
     return this->cost > other.cost;
