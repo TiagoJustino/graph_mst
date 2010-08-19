@@ -1,0 +1,129 @@
+% LaTeX document template.
+% Author: Rudy Matela
+% e-mail: rudy.matela@gmail.com
+% date: 2008-11-08 23:20
+
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{verbatim}
+\usepackage{a4wide}
+\usepackage{sty/macros}
+
+\title{Template de documento em \LaTeX\ Versão 2.3}
+\author{ J. Cicrano \and C. Beltrano \and Fulano de Tal }
+\date{
+	Universidade Fdsa do Asdf\\
+	Laboratório Foo Goo Bar\\
+	$\cdots$ \\
+	\today
+}
+
+
+\begin{document}
+
+
+\maketitle
+
+\begin{abstract}
+Este documento é um template de documento em \LaTeX. The quick brown fox jumps over the lazy dog.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
+\end{abstract}
+
+\tableofcontents
+\pagebreak
+
+
+\section{Introdução}
+
+Introdução do template. The quick brown fox jumps over the lazy dog. Lorem
+ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
+
+
+\section{Exemplos}
+
+
+\subsection{Descrição}
+
+A descrição é descrita abaixo:
+
+\begin{description}
+\item[Aspecto A:] Aspecto A.
+\item[Aspecto B:] Aspecto B.
+\item[Aspecto C:] Aspecto C.
+\end{description}
+
+
+\subsection{Figura}
+
+A figura \ref{fig:graph} mostra uma figura. Quidquid latine dictum sit altum
+viditur. The quick brown fox jumps over the lazy dog. Quidquid latine dictum
+sit altum viditur. The quick brown fox jumps over the lazy dog.
+
+\fig[.40]{graph}{Um grafo direcional}
+
+
+\subsection{Tabela}
+
+A tabela \ref{tab:tabela} mostra uma tabela. Quidquid latine dictum sit altum
+viditur. The quick brown fox jumps over the lazy dog. Quidquid latine dictum
+sit altum viditur. The quick brown fox jumps over the lazy dog.
+
+\begin{table}[htbp]
+	\caption{Tabela}
+	\label{tab:tabela}
+	\centering
+	\begin{tabular}{|c|l|r|}
+		\hline
+		The 	&	Quick 	&	Brown	\\
+		\hline
+		Fox	&	Jumps	&	Over	\\
+		The	&	Lazy	&	Dog	\\
+		\hline 
+	\end{tabular}
+\end{table} 
+
+
+\subsection{Citações (Referências)}
+
+De acordo com \cite{DEAD:1666,BEEF:1234} este paragrafo exemplifica referências
+(citações). Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Quidquid latine dictum sit altum viditur.
+
+
+\section{Lorem Ipsum}
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
+
+
+%\bibliographystyle{plain}
+%\bibliographystyle{cell}
+\bibliographystyle{alpha}
+\bibliography{bib}
+
+
+\end{document}
+
