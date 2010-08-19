@@ -7,7 +7,7 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 LIBS += -lgmpxx
-QMAKE_CXXFLAGS += -Werror
+QMAKE_CXXFLAGS += -Werror -g3
 
 # Input
 HEADERS += edge.h graph.h kruskal.h vertex.h
