@@ -34,8 +34,8 @@ class KruskalTest : public CppUnit::TestFixture {
             Graph g = Graph(f);
             vector<Edge>v = kruskal(g);
 
-            CPPUNIT_ASSERT( v.size() == 8 );
-            CPPUNIT_ASSERT( weight(v) == 32 );
+            CPPUNIT_ASSERT_EQUAL(       (size_t)8, v.size()  );
+            CPPUNIT_ASSERT_EQUAL( (mpf_class)32.0, weight(v) );
 		}
 };
 
