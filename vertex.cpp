@@ -1,13 +1,12 @@
 #include "vertex.h"
 
 Vertex::Vertex(int id, mpf_class x, mpf_class y) :
-        id(id), x(x), y(y), rank(0)
+        id(id), x(x), y(y), parent(this), rank(0)
 {
-    this->parent = this;
 }
 
 Vertex::Vertex(const Vertex &vertex) :
-        id(vertex.id), x(vertex.x), y(vertex.y)
+        id(vertex.id), x(vertex.x), y(vertex.y), parent(this), rank(0)
 {
 }
 
