@@ -17,17 +17,17 @@ Graph::Graph()
 Graph::Graph(FILE *f)
 {
     char mp_str[STR_NUM_LEN];
-    int n_vertices, n_edges;
+    int n_vertices, n_edges, r;
     short int type;
     //TODO: Read graph name
-    fscanf(f, " %*s ");
-    fscanf(f, " %d %hd %d ", &n_vertices, &type, &n_edges);
+    r = fscanf(f, " %*s ");
+    r = fscanf(f, " %d %hd %d ", &n_vertices, &type, &n_edges);
     for (int i = 0; i < n_vertices; ++i) {
-        fscanf(f, " %*s "); //TODO: Read node name
-        fscanf(f, " %s ", mp_str);
+        r = fscanf(f, " %*s "); //TODO: Read node name
+        r = fscanf(f, " %s ", mp_str);
         for(char *c = mp_str; *c; ++c) if(*c == ',') *c = '.';
         mpf_class x(mp_str);
-        fscanf(f, " %s ", mp_str);
+        r = fscanf(f, " %s ", mp_str);
         mpf_class y(mp_str);
         for(char *c = mp_str; *c; ++c) if(*c == ',') *c = '.';
         this->vertices.push_back(Vertex(i, x, y));
@@ -42,6 +42,13 @@ Graph::Graph(FILE *f)
                       this->findVertexById(v2 - 1),
                       cost);
             this->edges.push_back(edge);
+
+            mp_exp_t exp;
+            std::string s;
+            s = edge.getCost().get_str(exp);
+            if((int)exp < (int)s.size()) s.insert(exp, ".");
+            else for(int n = s.size(); n < exp; n++) s += "0";
+            printf("%d %d %s added\n", v1, v2, s.c_str());
         }
     }
     fclose(f);
@@ -75,7 +82,8 @@ void Graph::to_dot(vector<Edge>& edges, FILE *f)
         s = i->getCost().get_str(exp);
         if((int)exp < (int)s.size()) s.insert(exp, ".");
         else for(int n = s.size(); n < exp; n++) s += "0";
-        fprintf(f, "\"%d\" -- \"%d\" [label=\"%s\"]\n", i->getV1().getId(), i->getV2().getId(), s.c_str());
+        fprintf(f, "\"%d\" -- \"%d\" [label=\"%s\"]\n", i->getV1().getId() + 1,
+                i->getV2().getId() + 1, s.c_str());
     }
 }
 

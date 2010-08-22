@@ -22,15 +22,14 @@ class KruskalTest : public CppUnit::TestFixture {
             }
             return t;
         }
-        void internal_test(FILE* f, size_t s, double _w)
+        void internal_test(FILE* f, size_t s, double w)
         {
-            mpf_class w(_w);
             Graph g = Graph(f);
             vector<Edge>v = kruskal(g);
             Graph::to_dot(v, "graph.dot");
 
             CPPUNIT_ASSERT_EQUAL( s,  v.size() );
-            CPPUNIT_ASSERT_EQUAL( w, weight(v) );
+            CPPUNIT_ASSERT_EQUAL( w, weight(v).get_d() );
         }
     public:
         void setUp()
@@ -43,7 +42,7 @@ class KruskalTest : public CppUnit::TestFixture {
 
         void test()
         {
-            //internal_test(fopen("input/01_quadrado2009.txt", "r"), (size_t)8, 32);
+            internal_test(fopen("input/01_quadrado2009.txt", "r"), (size_t)8, 32);
             internal_test(fopen("input/03_serrinha2009.txt", "r"), (size_t)219, 15739.05);
         }
 };

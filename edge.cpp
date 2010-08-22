@@ -6,7 +6,7 @@ Edge::Edge(Vertex v1, Vertex v2, mpf_class cost) :
 }
 
 Edge::Edge(const Edge& e) :
-      v1(Vertex(e.v1)), v2(Vertex(e.v2)), cost(e.cost)
+      v1(e.v1), v2(e.v2), cost(e.cost)
 {
 }
 
