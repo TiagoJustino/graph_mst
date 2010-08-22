@@ -44,6 +44,7 @@ class KruskalTest : public CppUnit::TestFixture {
         {
             internal_test(fopen("input/01_quadrado2009.txt", "r"), (size_t)8, 32);
             internal_test(fopen("input/03_serrinha2009.txt", "r"), (size_t)219, 15739.05);
+            internal_test(fopen("input/04_palmeiras2008.txt", "r"), (size_t)271, 555.15);
         }
 };
 
