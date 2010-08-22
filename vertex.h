@@ -8,7 +8,6 @@ class Vertex
 private:
     int id;
     mpf_class x, y;
-
     //Disjoint Set attributes
     Vertex* parent;
     int rank;

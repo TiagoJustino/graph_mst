@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+#define STR_NUM_LEN 64
+
 Graph::Graph()
 {
     /*
@@ -12,39 +14,37 @@ Graph::Graph()
     */
 }
 
-Graph::Graph(QFile *f)
+Graph::Graph(FILE *f)
 {
-    QString mpz_str;
-    mpz_class no_vertices, no_edges;
+    char mp_str[STR_NUM_LEN];
+    int n_vertices, n_edges;
     short int type;
-    f->open(QIODevice::ReadOnly);
-    QTextStream fin(f);
-    fin >> this->name;
-    fin >> mpz_str; no_vertices = mpz_str.toStdString();
-    fin >> type;
-    fin >> mpz_str; no_edges = mpz_str.toStdString();
-    for (mpz_class i(0); i < no_vertices; ++i) {
-        int id;
-        mpz_class x, y;
-        fin >> id;
-        fin >> mpz_str; x = mpz_str.toStdString();
-        fin >> mpz_str; y = mpz_str.toStdString();
-        this->vertices.push_back(Vertex(id, x, y));
+    //TODO: Read graph name
+    fscanf(f, " %*s ");
+    fscanf(f, " %d %hd %d ", &n_vertices, &type, &n_edges);
+    for (int i = 0; i < n_vertices; ++i) {
+        fscanf(f, " %*s "); //TODO: Read node name
+        fscanf(f, " %s ", mp_str);
+        for(char *c = mp_str; *c; ++c) if(*c == ',') *c = '.';
+        mpf_class x(mp_str);
+        fscanf(f, " %s ", mp_str);
+        mpf_class y(mp_str);
+        for(char *c = mp_str; *c; ++c) if(*c == ',') *c = '.';
+        this->vertices.push_back(Vertex(i, x, y));
     }
     if (type == 1) {
-        for (mpz_class i(0); i < no_edges; ++i) {
+        for (mpz_class i(0); i < n_edges ; ++i) {
             int v1, v2;
-            fin >> v1;
-            fin >> v2;
-            fin >> mpz_str;
-            mpz_class cost(mpz_str.toStdString());
-            Edge edge(this->findVertexById(v1),
-                      this->findVertexById(v2),
+            if(fscanf(f, " %d %d %s ", &v1, &v2, mp_str) != 3) break;
+            for(char *c = mp_str; *c; ++c) if(*c == ',') *c = '.';
+            mpf_class cost(mp_str);
+            Edge edge(this->findVertexById(v1 - 1),
+                      this->findVertexById(v2 - 1),
                       cost);
             this->edges.push_back(edge);
         }
     }
-    f->close();
+    fclose(f);
 }
 
 Vertex Graph::findVertexById(int id)
@@ -57,7 +57,7 @@ Vertex Graph::findVertexById(int id)
     return not_found; 
 }
 
-vector<Edge> Graph::getEdges()
+vector<Edge>& Graph::getEdges()
 {
     return this->edges;
 }
@@ -65,4 +65,25 @@ vector<Edge> Graph::getEdges()
 int Graph::order()
 {
     return this->vertices.size();
+}
+
+void Graph::to_dot(vector<Edge>& edges, FILE *f)
+{
+    mp_exp_t exp;
+    std::string s;
+    for(vector<Edge>::iterator i = edges.begin(); i != edges.end(); ++i) {
+        s = i->getCost().get_str(exp);
+        if((int)exp < (int)s.size()) s.insert(exp, ".");
+        else for(int n = s.size(); n < exp; n++) s += "0";
+        fprintf(f, "\"%d\" -- \"%d\" [label=\"%s\"]\n", i->getV1().getId(), i->getV2().getId(), s.c_str());
+    }
+}
+
+void Graph::to_dot(vector<Edge>& edges, const char *path)
+{
+    FILE *f = fopen(path, "w");
+    fprintf(f, "graph {\nrankdir=LR\n");
+    to_dot(edges, f);
+    fprintf(f, "}");
+    fclose(f);
 }

@@ -1,21 +1,26 @@
 #include "edge.h"
 
-Edge::Edge(Vertex v1, Vertex v2, mpz_class cost) :
-        v1(v1), v2(v2), cost(cost)
+Edge::Edge(Vertex v1, Vertex v2, mpf_class cost) :
+      v1(v1), v2(v2), cost(cost)
 {
 }
 
-Vertex Edge::getV1()
+Edge::Edge(const Edge& e) :
+      v1(Vertex(e.v1)), v2(Vertex(e.v2)), cost(e.cost)
+{
+}
+
+Vertex& Edge::getV1()
 {
     return this->v1;
 }
 
-Vertex Edge::getV2()
+Vertex& Edge::getV2()
 {
     return this->v2;
 }
 
-mpz_class Edge::getCost()
+mpf_class Edge::getCost()
 {
     return this->cost;
 }
