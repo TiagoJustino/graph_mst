@@ -11,9 +11,10 @@ template <class T>
 class BinaryHeap {
     private:
         BinaryHeapNode<T> *root;
-        int size;
+        int _size;
     public:
-        BinaryHeap(): root(NULL), size(0) {};
+        BinaryHeap(): root(NULL), _size(0) {};
+        int size() { return this->_size; };
         BinaryHeapNode<T> *push_back(T& el) {
             BinaryHeapNode<T>* node = new BinaryHeapNode<T>;
             node->el = el;
@@ -21,7 +22,13 @@ class BinaryHeap {
             return node;
         };
         bool empty() {
-            return this->size == 0;
+            return this->_size == 0;
+        };
+        T& getMin() {
+            if(this->empty())
+                return root->el;
+            //TODO: Code
+            return root->el;
         };
         T& pop() {
             if(this->empty())
@@ -31,6 +38,11 @@ class BinaryHeap {
         };
         void update(BinaryHeapNode<T> *node) {
             node = NULL;
+        };
+        BinaryHeapNode<T> *insert(T& el) {
+            BinaryHeapNode<T>* node = this->push_back(el);
+            update(node);
+            return node;
         };
 };
 
