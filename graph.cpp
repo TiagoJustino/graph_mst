@@ -42,13 +42,6 @@ Graph::Graph(FILE *f)
                       this->findVertexById(v2 - 1),
                       cost);
             this->edges.push_back(edge);
-
-            mp_exp_t exp;
-            std::string s;
-            s = edge.getCost().get_str(exp);
-            if((int)exp < (int)s.size()) s.insert(exp, ".");
-            else for(int n = s.size(); n < exp; n++) s += "0";
-            printf("%d %d %s added\n", v1, v2, s.c_str());
         }
     }
     fclose(f);

@@ -25,22 +25,16 @@ vector<Edge> kruskal(Graph& g)
     while(n and !heap.empty()) {
         pop_heap(heap.begin(), heap.end(), greater<Edge>());
         Edge& e = heap.back();
-        heap.pop_back();
         int setA = dsets.FindSet(e.getV1().getId()),
             setB = dsets.FindSet(e.getV2().getId());
         if(setA == setB) {
-            //mp_exp_t exp;
-            //std::string s;
-            //s = e.getCost().get_str(exp);
-            //if((int)exp < (int)s.size()) s.insert(exp, ".");
-            //else for(int n = s.size(); n < exp; n++) s += "0";
-            //printf("%d %d (cost=[%s]) are in same set\n", e.getV1().getId(),
-                   //e.getV2().getId(), s.c_str());
+            heap.pop_back();
             continue;
         }
-        //printf("joining %d %d\n", e.getV1().getId(), e.getV2().getId());
         dsets.Union(setA, setB);
         l.push_back(e);
+        //For some reason must be called l.push_back(e) before heap.pop_back()
+        heap.pop_back();
         n--;
     }
 
