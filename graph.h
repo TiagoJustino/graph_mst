@@ -12,8 +12,10 @@ using std::vector;
 class Graph
 {
 private:
+    static Vertex not_found;
+
     QString name;
-    QList<Vertex> vertices;
+    vector<Vertex> vertices;
     vector<Edge> edges;
     static void to_dot(vector<Edge>& edges, FILE *f);
 
@@ -22,7 +24,7 @@ public:
     Graph(FILE *f);
     void addVertex(Vertex v);
     void addEdge(Edge e);
-    Vertex findVertexById(int id);
+    Vertex& findVertexById(unsigned int id);
     vector<Edge>& getEdges();
     int order();
 

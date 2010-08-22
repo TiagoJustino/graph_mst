@@ -11,7 +11,9 @@ QMAKE_CXXFLAGS -= -O2
 QMAKE_CXXFLAGS += -O0 -g3 -Werror
 
 # Input
-HEADERS += edge.h graph.h kruskal.h vertex.h disjoint_sets.h
-SOURCES += edge.cpp graph.cpp kruskal.cpp vertex.cpp disjoint_sets.cpp
+HEADERS += edge.h graph.h kruskal.h vertex.h disjoint_sets.h prim.h \
+           binary_heap.h
+SOURCES += edge.cpp graph.cpp kruskal.cpp vertex.cpp disjoint_sets.cpp \
+           prim.cpp
 SOURCES += kruskal_test.cpp
 SOURCES += main_test.cpp

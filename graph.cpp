@@ -47,14 +47,9 @@ Graph::Graph(FILE *f)
     fclose(f);
 }
 
-Vertex Graph::findVertexById(int id)
+Vertex& Graph::findVertexById(unsigned int id)
 {
-    Vertex not_found(-1, 0, 0);
-    foreach(Vertex v, this->vertices) {
-        if (v.getId() == id)
-            return v;
-    }
-    return not_found; 
+    return vertices[id];
 }
 
 vector<Edge>& Graph::getEdges()

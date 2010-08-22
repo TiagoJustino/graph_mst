@@ -1,8 +1,11 @@
 #include "edge.h"
+#include "vertex.h"
 
 Edge::Edge(Vertex v1, Vertex v2, mpf_class cost) :
       v1(v1), v2(v2), cost(cost)
 {
+    v1.add_neighbor(*this);
+    v2.add_neighbor(*this);
 }
 
 Edge::Edge(const Edge& e) :

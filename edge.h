@@ -4,6 +4,8 @@
 #include "vertex.h"
 #include <gmpxx.h>
 
+class Vertex;
+
 class Edge
 {
 private:
