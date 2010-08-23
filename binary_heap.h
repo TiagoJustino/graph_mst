@@ -53,6 +53,7 @@ class BinaryHeap {
 
         BinaryHeapNode<T>* push_back(T& el) {
             BinaryHeapNode<T>* p = new BinaryHeapNode<T>(el);
+            p->pos = this->heap.size();
             this->heap.push_back(p);
             return p;
         };
@@ -70,7 +71,7 @@ class BinaryHeap {
             unsigned int s, l = p->pos * 2 + 1, r = p->pos * 2 + 2;
             if(l >= this->heap.size()) return p;
             if(r >= this->heap.size())
-                s = r;
+                s = l;
             else {
                 if(this->heap[r]->el < this->heap[l]->el)
                     s = r;
