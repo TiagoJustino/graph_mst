@@ -6,7 +6,6 @@
 #include "binary_heap.h"
 
 using std::vector;
-using std::greater;
 
 class Weight {
     public:
