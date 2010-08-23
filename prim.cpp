@@ -14,6 +14,7 @@ class Weight {
         mpf_class w;
 
         Weight(int _v, int _p, mpf_class _w): v(_v), p(_p), w(_w) {};
+        //TODO: Verify if infinite
         bool operator<(const Weight& other) const { return this->w < other.w; };
 };
 
@@ -21,11 +22,9 @@ vector<Edge> prim(Graph& g)
 {
     vector<Edge> l;
     BinaryHeap<Weight> heap;
-    BinaryHeapNode<Weight> **nodes;
-    nodes = (BinaryHeapNode<Weight> **)malloc(g.order() * sizeof(BinaryHeapNode<Weight> *));
+    vector<BinaryHeapNode<Weight>*> nodes(g.order());
     Weight initial(0, -1, 0.0);
 
-    //TODO: verify the value of INFINITE
     nodes[0] = heap.push_back(initial);
     for(int i = g.order() - 1; i; --i) {
         Weight w(i, -1, -1);// weight -1 means infinite
@@ -44,11 +43,10 @@ vector<Edge> prim(Graph& g)
             Edge e(v1, v2, w.w);
             l.push_back(e);
         }
+
         vector<Edge>& neighbors = g.findVertexById(w.v).get_neighbors();
         vector<Edge>::iterator i = neighbors.begin();
-
         for(; i != neighbors.end(); ++i) {
-            //TODO: see how to do this in c++
             if(w.v == i->getV1().getId() and w.v != i->getV2().getId() and
                nodes[i->getV2().getId()]->el.w > w.w) {
                 nodes[i->getV2().getId()]->el.p = w.v;
@@ -64,7 +62,6 @@ vector<Edge> prim(Graph& g)
         }
         --n;
     }
-    free(nodes);
 
     return l;
 }
