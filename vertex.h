@@ -2,11 +2,11 @@
 #define VERTEX_H
 
 #include <gmpxx.h>
-#include <vector>
+#include <utility>
+#include <list>
 
-using std::vector;
-
-class Edge;
+using std::list;
+using std::pair;
 
 class Vertex
 {
@@ -14,15 +14,15 @@ private:
     int id;
     mpf_class x, y;
     // neighbors
-    vector<Edge> edges;
+    list<pair<int, mpf_class> > neighbors;
 
 public:
     Vertex(int id, mpf_class x, mpf_class y);
     int getId();
     mpf_class getX();
     mpf_class getY();
-    void add_neighbor(Edge& edge);
-    vector<Edge>& get_neighbors();
+    void add_neighbor(int id, mpf_class cost);
+    list<pair<int, mpf_class> > get_neighbors();
 };
 
 #endif // VERTEX_H

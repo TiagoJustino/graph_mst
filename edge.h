@@ -4,15 +4,13 @@
 #include "vertex.h"
 #include <gmpxx.h>
 
-class Vertex;
-
 class Edge
 {
 private:
     Vertex v1, v2;
     mpf_class cost;
 public:
-    Edge(Vertex v1, Vertex v2, mpf_class cost);
+    Edge(Vertex& v1, Vertex& v2, mpf_class cost);
     Edge(const Edge& e);
     Vertex& getV1();
     Vertex& getV2();

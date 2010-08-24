@@ -54,6 +54,8 @@ public:
             for (int j = 0; inputs[j].path != NULL; ++j) {
                 Graph g = getGraph(inputs[j].path);
                 vector<Edge>v = make_mst[i](g);
+                //Graph::to_dot(v, "graph.dot");
+                CPPUNIT_ASSERT_EQUAL( g.order() - 1, (int)v.size() );
                 CPPUNIT_ASSERT_EQUAL( inputs[j].cost, weight(v).get_d() );
             }
         }

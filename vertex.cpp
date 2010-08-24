@@ -21,12 +21,13 @@ mpf_class Vertex::getY()
     return this->y;
 }
 
-void Vertex::add_neighbor(Edge& edge)
+void Vertex::add_neighbor(int id, mpf_class cost)
 {
-    this->edges.push_back(edge);
+    pair<int, mpf_class> neighbor(id, cost);
+    this->neighbors.push_back(neighbor);
 }
 
-vector<Edge>& Vertex::get_neighbors()
+list<pair<int, mpf_class> > Vertex::get_neighbors()
 {
-    return this->edges;
+    return this->neighbors;
 }

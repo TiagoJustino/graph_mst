@@ -10,11 +10,11 @@ LIBS += -lgmpxx `cppunit-config --libs`
 QMAKE_CXXFLAGS += -Werror
 CONFIG -= release
 CONFIG += debug
+QMAKE_CXXFLAGS_DEBUG -= -g
+QMAKE_CXXFLAGS_DEBUG += -g3 -O0 -Werror
 
 # Input
 HEADERS += edge.h graph.h kruskal.h vertex.h disjoint_sets.h prim.h \
            binary_heap.h
 SOURCES += edge.cpp graph.cpp kruskal.cpp vertex.cpp disjoint_sets.cpp \
-           prim.cpp
-SOURCES += binary_heap_test.cpp graph_mst_test.cpp
-SOURCES += main_test.cpp
+           prim.cpp graph_mst_test.cpp main_test.cpp

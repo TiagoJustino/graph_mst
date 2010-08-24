@@ -14,8 +14,8 @@ class BinaryHeapNode {
     private:
         int pos;
     public:
-        T& el;
-        BinaryHeapNode(T& _el): el(_el) {};
+        T el;
+        BinaryHeapNode(T _el): el(_el) {};
     friend class BinaryHeap<T>;
 };
 
@@ -51,7 +51,7 @@ class BinaryHeap {
             return this->heap[0]->el;
         };
 
-        BinaryHeapNode<T>* push_back(T& el) {
+        BinaryHeapNode<T>* push_back(T el) {
             BinaryHeapNode<T>* p = new BinaryHeapNode<T>(el);
             p->pos = this->heap.size();
             this->heap.push_back(p);
@@ -86,9 +86,9 @@ class BinaryHeap {
             return p;
         };
 
-        T& pop() {
+        T pop() {
             BinaryHeapNode<T>* p = this->heap[0];
-            T& e = this->heap[0]->el;
+            T e = this->heap[0]->el;
             this->heap[0] = this->heap[this->heap.size() - 1];
             this->heap.pop_back();
             delete p;
