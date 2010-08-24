@@ -7,8 +7,9 @@ TARGET = graph_mst_test
 DEPENDPATH += .
 INCLUDEPATH += .
 LIBS += -lgmpxx `cppunit-config --libs`
-QMAKE_CXXFLAGS -= -O2
-QMAKE_CXXFLAGS += -O0 -g3 -Werror
+QMAKE_CXXFLAGS += -Werror
+CONFIG -= release
+CONFIG += debug
 
 # Input
 HEADERS += edge.h graph.h kruskal.h vertex.h disjoint_sets.h prim.h \
