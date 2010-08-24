@@ -22,7 +22,6 @@ private:
     void setGraphFromDelaunay(FILE *f, int n_vertices);
     static void to_dot(vector<Edge> edges, FILE *f);
     static mpf_class calculateDistance(Vertex a, Vertex b);
-    static std::string mpfToString(mpf_class n);
 
 public:
     Graph();
@@ -34,6 +33,7 @@ public:
     int order();
 
     static void to_dot(vector<Edge> edges, const char *path);
+    static std::string mpfToString(mpf_class n);
 };
 
 #endif // GRAPH_H

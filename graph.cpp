@@ -61,8 +61,8 @@ void Graph::setGraphFromDelaunay(FILE *f, int n_vertices) {
     for(i = 0; i < out.numberofpoints; ++i)
         this->vertices.push_back(Vertex( i, out.pointlist[2*i], out.pointlist[2*i+1]));
     for(i = 0; i < out.numberofedges; ++i) {
-        Vertex a = this->findVertexById(out.edgelist[2*i]);
-        Vertex b = this->findVertexById(out.edgelist[2*i+1]);
+        Vertex& a = this->findVertexById(out.edgelist[2*i]);
+        Vertex& b = this->findVertexById(out.edgelist[2*i+1]);
         this->edges.push_back(Edge(a, b, calculateDistance(a, b)));
     }
     //TODO: Free input and output structs.
