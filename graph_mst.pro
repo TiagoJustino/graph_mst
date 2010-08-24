@@ -15,6 +15,6 @@ CONFIG += debug
 HEADERS += edge.h graph.h kruskal.h vertex.h disjoint_sets.h prim.h \
            binary_heap.h
 SOURCES += edge.cpp graph.cpp kruskal.cpp vertex.cpp disjoint_sets.cpp \
-           prim.cpp binary_heap_test.cpp
-SOURCES += kruskal_test.cpp
+           prim.cpp
+SOURCES += binary_heap_test.cpp graph_mst_test.cpp
 SOURCES += main_test.cpp
