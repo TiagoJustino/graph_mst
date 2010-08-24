@@ -130,23 +130,26 @@ std::string Graph::mpfToString(mpf_class n)
 {
     mp_exp_t exp;
     std::string s = n.get_str(exp);
-    printf("[%s][%d]\n", s.c_str(), (int)exp);
-    if((int)exp < (int)s.size()) s.insert(exp, ".");
+    if(exp < 0) {
+        for(; exp; ++exp) s.insert(0, "0");
+        s.insert(0, ".");
+    }
+    else if((int)exp < (int)s.size()) s.insert(exp, ".");
     else for(int n = s.size(); n < exp; n++) s += "0";
     return s;
 }
 
-void Graph::to_dot(vector<Edge>& edges, FILE *f)
+void Graph::to_dot(vector<Edge> edges, FILE *f)
 {
-    for(vector<Edge>::iterator i = edges.begin(); i != edges.end(); ++i)
+    for(vector<Edge>::iterator i = edges.begin(); i < edges.end(); ++i) 
         fprintf(f, "\"%d\" -- \"%d\" [label=\"%s\"]\n", i->getV1().getId() + 1,
                 i->getV2().getId() + 1, mpfToString(i->getCost()).c_str());
 }
 
-void Graph::to_dot(vector<Edge>& edges, const char *path)
+void Graph::to_dot(vector<Edge> edges, const char *path)
 {
     FILE *f = fopen(path, "w");
-    fprintf(f, "graph {\nrankdir=LR\n");
+    fprintf(f, "graph {\n");
     to_dot(edges, f);
     fprintf(f, "}");
     fclose(f);

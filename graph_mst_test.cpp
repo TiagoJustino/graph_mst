@@ -21,7 +21,7 @@ const struct {
     { "input/02_DONI22009.txt", 106.407933362449 },
     { "input/03_serrinha2009.txt", 15739.05 },
     { "input/04_palmeiras2008.txt", 555.15 },
-    { "input/05_DONI12009.txt", 0.0 },
+    { "input/05_DONI12009.txt", 255.9 },
     { NULL, 0.0 }
 };
 
@@ -54,9 +54,18 @@ public:
             for (int j = 0; inputs[j].path != NULL; ++j) {
                 Graph g = getGraph(inputs[j].path);
                 vector<Edge>v = make_mst[i](g);
-                //Graph::to_dot(v, "graph.dot");
+                Graph::to_dot(v, "graph.dot");
                 CPPUNIT_ASSERT_EQUAL_MESSAGE(inputs[j].path,
                                              g.order() - 1, (int)v.size());
+                // For some reason i got the following error when comparing double:
+                // equality assertion failed
+                // - Expected: 106.407933362449
+                // - Actual  : 106.407933362449
+                // And with cast fo float i get:
+                // - Expected: 255.9
+                // - Actual  : 255.9
+                // - input/05_DONI12009.txt
+                // WTF !!!!!!!!
                 CPPUNIT_ASSERT_EQUAL_MESSAGE(inputs[j].path,
                                              inputs[j].cost, weight(v).get_d());
             }
