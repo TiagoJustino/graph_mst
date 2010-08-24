@@ -18,10 +18,10 @@ const struct {
     double cost;
 } inputs[] = {
     { "input/01_quadrado2009.txt", 32.0 },
-//  {"input/02_DONI22009.txt", COST },
+    { "input/02_DONI22009.txt", 106.407933362449 },
     { "input/03_serrinha2009.txt", 15739.05 },
     { "input/04_palmeiras2008.txt", 555.15 },
-//  { "input/05_DONI12009.txt", COST },
+    { "input/05_DONI12009.txt", 0.0 },
     { NULL, 0.0 }
 };
 
@@ -55,8 +55,10 @@ public:
                 Graph g = getGraph(inputs[j].path);
                 vector<Edge>v = make_mst[i](g);
                 //Graph::to_dot(v, "graph.dot");
-                CPPUNIT_ASSERT_EQUAL( g.order() - 1, (int)v.size() );
-                CPPUNIT_ASSERT_EQUAL( inputs[j].cost, weight(v).get_d() );
+                CPPUNIT_ASSERT_EQUAL_MESSAGE(inputs[j].path,
+                                             g.order() - 1, (int)v.size());
+                CPPUNIT_ASSERT_EQUAL_MESSAGE(inputs[j].path,
+                                             inputs[j].cost, weight(v).get_d());
             }
         }
     }

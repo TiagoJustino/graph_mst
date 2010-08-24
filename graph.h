@@ -4,6 +4,7 @@
 #include <QtCore>
 #include <gmpxx.h>
 #include <vector>
+#include <string>
 #include "vertex.h"
 #include "edge.h"
 
@@ -12,12 +13,16 @@ using std::vector;
 class Graph
 {
 private:
-    static Vertex not_found;
-
+    //Attributes:
     QString name;
     vector<Vertex> vertices;
     vector<Edge> edges;
+
+    //Methods:
+    void setGraphFromDelaunay(FILE *f, int n_vertices);
     static void to_dot(vector<Edge>& edges, FILE *f);
+    static mpf_class calculateDistance(Vertex a, Vertex b);
+    static std::string mpfToString(mpf_class n);
 
 public:
     Graph();
