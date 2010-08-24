@@ -11,6 +11,8 @@
 
 #include <string>
 #include <vector>
+#include <cmath>
+#include <limits>
 using namespace std;
 
 const struct {
@@ -26,6 +28,7 @@ const struct {
 };
 
 vector<Edge> (*make_mst[])(Graph&) = {kruskal, prim, NULL};
+char* algorithm[] = {(char *)"kruskal", (char *)"prim"};
 
 class GraphMstTest : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE( GraphMstTest );
@@ -43,6 +46,9 @@ private:
     Graph getGraph(string path) {
         return Graph(fopen(path.c_str(), "r"));
     }        
+    void areSame(double a, double b) {
+        CPPUNIT_ASSERT_EQUAL((long long)(10000 * a), (long long)(10000 * b));
+    }
 
 public:
     void setUp() {}
@@ -51,12 +57,15 @@ public:
 
     void testMst() {
         for (int i = 0; make_mst[i] != NULL; ++i) {
+            printf("Algorithm = [%s]\n", algorithm[i]);
             for (int j = 0; inputs[j].path != NULL; ++j) {
+                printf("Input = [%s]\n", inputs[j].path);
                 Graph g = getGraph(inputs[j].path);
                 vector<Edge>v = make_mst[i](g);
                 Graph::to_dot(v, "graph.dot");
                 CPPUNIT_ASSERT_EQUAL_MESSAGE(inputs[j].path,
                                              g.order() - 1, (int)v.size());
+                areSame(inputs[j].cost, weight(v).get_d());
                 // For some reason i got the following error when comparing double:
                 // equality assertion failed
                 // - Expected: 106.407933362449
@@ -66,8 +75,6 @@ public:
                 // - Actual  : 255.9
                 // - input/05_DONI12009.txt
                 // WTF !!!!!!!!
-                CPPUNIT_ASSERT_EQUAL_MESSAGE(inputs[j].path,
-                                             inputs[j].cost, weight(v).get_d());
             }
         }
     }
