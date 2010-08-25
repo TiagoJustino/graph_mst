@@ -4,6 +4,7 @@
 #include "graph.h"
 #include "kruskal.h"
 #include "prim.h"
+#include "boruvka.h"
 #include "edge.h"
 #include "vertex.h"
 
@@ -37,8 +38,8 @@ string outputs[] = {
     "06_DONI12009_mst.dot"
 };
 
-vector<Edge> (*make_mst[])(Graph&) = {kruskal, prim, NULL};
-string algorithm[] = {"kruskal", "prim"};
+vector<Edge> (*make_mst[])(Graph&) = {kruskal, prim, boruvka, NULL};
+string algorithm[] = {"kruskal", "prim", "boruvka"};
 
 class GraphMstTest : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE( GraphMstTest );

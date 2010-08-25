@@ -4,7 +4,7 @@
 	epstopdf $< > $@
 
 %.pdf: %.dot
-	dot -Tpdf < $< > $@
+	fdp -Tpdf < $< > $@
 
 %.pdf: %.svg
 	inkscape -A $@ $<

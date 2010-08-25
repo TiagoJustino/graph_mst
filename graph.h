@@ -30,6 +30,7 @@ public:
     void addEdge(Edge e);
     Vertex& findVertexById(unsigned int id);
     vector<Edge>& getEdges();
+    vector<Vertex>& getVertices();
     int order();
 
     static void to_dot(vector<Edge> edges, const char *path);

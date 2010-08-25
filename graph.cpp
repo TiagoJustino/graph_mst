@@ -123,6 +123,11 @@ vector<Edge>& Graph::getEdges()
     return this->edges;
 }
 
+vector<Vertex>& Graph::getVertices()
+{
+    return this->vertices;
+}
+
 int Graph::order()
 {
     return this->vertices.size();
