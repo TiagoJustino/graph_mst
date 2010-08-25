@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include <list>
 #include <set>
@@ -5,6 +6,14 @@
 #include "boruvka.h"
 
 using namespace std;
+
+class edge_t {
+public:
+    int v1, v2;
+    mpf_class w;
+    bool operator<(edge_t o) { return this->w < o.w; }
+    bool operator==(edge_t o) { return ((this->v1 == o.v1 and this->v2 == o.v2) or (this->v1 == o.v2 and this->v2 == o.v1)) and this->w == o.w; }
+};
 
 static list<int> listSets(const DisjointSets &ds)
 {
@@ -22,7 +31,7 @@ static list<int> listElements(const DisjointSets &ds, int set)
     list<int> elements;
     for (int i = 0; i < ds.NumElements(); ++i)
     {
-        if (ds.FindSet(i) == set)
+        if (ds.FindSet(i) == ds.FindSet(set))
             elements.push_front(i);
     }
     return elements;
@@ -39,45 +48,58 @@ vector<Edge> boruvka(Graph &g)
         list<int> components(listSets(cc));
         list<int>::iterator component;
 //  3   Begin with an empty set of edges E
-        set<Edge> e;
+        list<edge_t> e;
 //  4   For each component:
         for (component = components.begin(); component != components.end(); ++component) {
             list<int> vertices(listElements(cc, *component));
             list<int>::iterator vertex;
 //  5     Begin with an empty set of edges S
-            set<Edge> s;
+            list<edge_t> s;
 //  6     For each vertex in the component:
             for (vertex = vertices.begin(); vertex != vertices.end(); ++vertex) {
 //  7       Add the cheapest edge from the vertex in the component to another vertex in a disjoint component to S
                 list< pair< int, mpf_class > > neighbour(g.findVertexById(*vertex).get_neighbors());
 
-                for (list< pair< int, mpf_class > >::iterator i = neighbour.begin(); i != neighbour.end(); ++i)
+                pair< int, mpf_class > min;
+                min.first = -1;
+
+                for (list< pair< int, mpf_class > >::iterator i = neighbour.begin(); i != neighbour.end(); ++i) {
                     if (cc.FindSet(*vertex) == cc.FindSet((*i).first))
-                        neighbour.erase(i);
-
-                pair< int, mpf_class > min = *(neighbour.begin());
-
-                for (list< pair< int, mpf_class > >::iterator i = (++neighbour.begin()); i != neighbour.end(); ++i)
-                    if ((*i).second < min.second)
+                        continue;
+                    if (min.first == -1 or (*i).second < min.second)
                         min = *i;
+                }
 
-                Vertex v1 = g.findVertexById(*vertex);
-                Vertex v2 = g.findVertexById(min.first);
-                s.insert(Edge(v1, v2, min.second));
+                if (min.first == -1) {
+                    continue;
+                }
+
+                edge_t te;
+                te.v1 = *vertex;
+                te.v2 = min.first;
+                te.w = min.second;
+                s.push_front(te);
             }
 //  8     Add the cheapest edge in S to E
-            Edge min_edge(*(s.begin()));
-            set<Edge>::iterator edge;
+            edge_t min_edge = *(s.begin());
+            list<edge_t>::iterator edge;
             for (edge = (++s.begin()); edge != s.end(); ++edge) {
-                if (min_edge > (*edge))
-                    min_edge = Edge(*edge);
+                if (min_edge.w > (*edge).w)
+                    min_edge = (*edge);
             }
-            cc.Union(cc.FindSet((min_edge).getV1().getId()), cc.FindSet((min_edge).getV2().getId()));
-            e.insert(min_edge);
+            bool pepe_jah_tirei_a_vela = false;
+            for (list<edge_t>::iterator i = e.begin(); i != e.end(); ++i) {
+                if (*i == min_edge)
+                    pepe_jah_tirei_a_vela = true;
+            }
+            if (!pepe_jah_tirei_a_vela)
+                e.push_front(min_edge);
         }
 //  9   Add the resulting set of edges E to T.
-        for (set<Edge>::iterator edge = e.begin(); edge != e.end(); ++edge) {
-            t.push_back(*edge);
+        for (list<edge_t>::iterator edge = e.begin(); edge != e.end(); ++edge) {
+            cc.Union(cc.FindSet(edge->v1), cc.FindSet(edge->v2));
+            Edge te(g.findVertexById(edge->v1), g.findVertexById(edge->v2), edge->w);
+            t.push_back(te);
         }
     }
 // 10 The resulting set of edges T is the minimum spanning tree of G.
