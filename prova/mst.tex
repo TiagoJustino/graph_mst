@@ -1,0 +1,57 @@
+% LaTeX document template.
+% Author: Rudy Matela
+% e-mail: rudy.matela@gmail.com
+% date: 2008-11-08 23:20
+
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{verbatim}
+\usepackage{a4wide}
+\usepackage{sty/macros}
+
+\title{II NPC de PAA}
+\author{ Renato Aguiar \and Tiago Justino }
+\date{
+    Prof. Marcos Negreiros \\
+	Universidade Estadual do Ceará \\
+	$\cdots$ \\
+	\today
+}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Projeto de Ambiente de Avaliação de Algoritmos de AGM}
+\subsection{Descreva o seu ambiente de vizualização e cálculo de árvores e como
+usá-lo.}
+
+A programa possui uma interface de linha de comando (CLI) onde deve ser passado
+como único parâmetro o nome do arquivo de entrada. Feito isso, todos os
+algoritmos serão executados sobre o grafo contido no arquivo de entrada. Ao
+final, a aplicação imprime na tela os resultados e gera arquivos de imagem para
+o grafo original e para as árvores resultantes dos algoritmos.
+
+\subsection{Mostre as diferenças entre os cálculos da AGM para os métodos de
+PRIM, KRUSKAL e BORUVKA}
+
+\begin{description}
+\item[Prim:] É um algoritmo guloso que parte de um nó qualquer do grafo e vai
+inserindo o nó mais próximo da árvore geradora parcial e que não forma ciclo.
+\item[Kruskal:] É um algoritmo guloso que seleciona as arestas em ordem crescente,
+eliminando aquelas que formam ciclos, até que todos os vértices tenham sido
+alcançados.
+\item[Boruvka:] O algoritmo de Boruvka começa com uma componente conexa para
+cada nó e vai ligando as componentes através da aresta de menor custo entre
+elas. Um característica interessante desse algoritmo é que o processamento de
+cada componente pode ocorrer em paralelo.
+\end{description}
+
+
+\end{document}
+
