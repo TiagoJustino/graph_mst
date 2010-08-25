@@ -118,9 +118,6 @@ cobre todos os vértices do grafo $G$\cite[p. 584]{cormen2001introduction}.
 A figura \ref{fig:kruskal_01_quadrado2009_mst} mostra um exemplo de uma MST para
 o grafo \ref{fig:QUADRADO2009_ini}.
 
-\fig[.6]{QUADRADO2009_ini}{Um grafo direcional}
-\fig[.6]{kruskal_01_quadrado2009_mst}{Uma MST para \ref{fig:QUADRADO2009_ini}}
-
 Neste trabalho iremos explorar os algoritmos de Prim, Kruskal e Boruvka que
 podem ser implementados com complexidade $O(E lg V)$ utilizando heaps binarios.
 Com a utilização de heaps de Fibonacci o algoritmo de Prim possui complexidade
@@ -206,16 +203,95 @@ foi gerada a EMST \ref{fig:kruskal_02_DONI22009_mst}.
 
 \verbatiminput{DONI22009.txt}
 
-\fig[.6]{02_DONI22009_euclidean}{Um grafo Euclidiano}
-\fig[.6]{02_DONI22009_delaunay}{Uma triangulação de Delaunay para o grafo
-\ref{fig:02_DONI22009_euclidean}}
-\fig[.6]{kruskal_02_DONI22009_mst}{Uma EMST paga o grafo Euclidiano
-\ref{fig:02_DONI22009_euclidean}}
+\section{Resultados}
+
+Em nossa implementação, executando em um processador AMD Athlon(tm) 64 Processor
+3000+ de 1000 MHz no sistema operacional GNU/Linux, distribuição Ubuntu x86\_64
+versão lucid e kernel 2.6.32-24 conseguimos obter os seguintes resultados:
+
+\begin{itemize}
+\item kruskal
+\begin{itemize}
+\item 01\_quadrado2009.txt
+\begin{itemize}
+\item Tempo gasto = 0.000000 
+\item Peso total = 32
+\end{itemize}
+\item 02\_DONI22009.txt
+\begin{itemize}
+\item Tempo gasto = 0.010000 
+\item Peso total = 106.40793336244902906 
+\end{itemize}
+\item 03\_serrinha2009.txt
+\begin{itemize}
+\item Tempo gasto = 0.020000 
+\item Peso total = 15739.05 
+\end{itemize}
+\item 04\_palmeiras2008.txt
+\begin{itemize}
+\item Tempo gasto = 0.010000 
+\item Peso total = 555.149999999999999995 
+\end{itemize}
+\item 05\_DONI12009.txt
+\begin{itemize}
+\item Tempo gasto = 0.060000 
+\item Peso total = 255.900099222521051567 
+\end{itemize}
+\item 06\_DONI12009.txt
+\begin{itemize}
+\item Tempo gasto = 0.100000 
+\item Peso total = 345.318666013446358693 
+\end{itemize}
+\end{itemize}
+\item prim 
+\begin{itemize}
+\item 01\_quadrado2009.txt
+\begin{itemize}
+\item Tempo gasto = 0.000000 
+\item Peso total = 32
+\end{itemize}
+\item 02\_DONI22009.txt
+\begin{itemize}
+\item Tempo gasto = 0.010000 
+\item Peso total = 106.40793336244902906 
+\end{itemize}
+\item 03\_serrinha2009.txt
+\begin{itemize}
+\item Tempo gasto = 0.000000 
+\item Peso total = 15739.05 
+\end{itemize}
+\item 04\_palmeiras2008.txt
+\begin{itemize}
+\item Tempo gasto = 0.010000 
+\item Peso total = 555.149999999999999995 
+\end{itemize}
+\item 05\_DONI12009.txt
+\begin{itemize}
+\item Tempo gasto = 0.020000 
+\item Peso total = 255.900099222521051567 
+\end{itemize}
+\item 06\_DONI12009.txt
+\begin{itemize}
+\item Tempo gasto = 0.040000 
+\item Peso total = 345.318666013446358692 
+\end{itemize}
+\end{itemize}
+\end{itemize}
 
 %\bibliographystyle{plain}
 %\bibliographystyle{cell}
 \bibliographystyle{alpha}
 \bibliography{bib}
+
+\section{Anexo: Lista de figuras}
+
+\fig[.6]{QUADRADO2009_ini}{Um grafo direcional}
+\fig[.6]{kruskal_01_quadrado2009_mst}{Uma MST para \ref{fig:QUADRADO2009_ini}}
+\fig[.6]{02_DONI22009_euclidean}{Um grafo Euclidiano}
+\fig[.6]{02_DONI22009_delaunay}{Uma triangulação de Delaunay para o grafo
+\ref{fig:02_DONI22009_euclidean}}
+\fig[.6]{kruskal_02_DONI22009_mst}{Uma EMST paga o grafo Euclidiano
+\ref{fig:02_DONI22009_euclidean}}
 
 \end{document}
 

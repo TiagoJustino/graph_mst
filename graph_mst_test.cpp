@@ -1,6 +1,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <QtCore>
 #include <gmpxx.h>
+#include <ctime>
 #include "graph.h"
 #include "kruskal.h"
 #include "prim.h"
@@ -70,10 +71,13 @@ public:
         for (int i = 0; make_mst[i] != NULL; ++i) {
             printf("Algorithm = [%s]\n", algorithm[i].c_str());
             for (int j = 0; inputs[j].path != NULL; ++j) {
-                printf("Input = [%s]\n", inputs[j].path);
+                clock_t start = clock();
+                printf("Input [%s]:\n", inputs[j].path);
                 Graph g = getGraph(inputs[j].path);
                 if(!i) g.to_dot("ini");
                 vector<Edge>v = make_mst[i](g);
+                printf("    Time elapsed = [%lf], ", ((double)clock() - start) / CLOCKS_PER_SEC);
+                printf("Weight = [%s]\n", Graph::mpfToString(weight(v)).c_str());
                 Graph::to_dot(v, (algorithm[i] + "_" + outputs[j]).c_str());
                 CPPUNIT_ASSERT_EQUAL_MESSAGE(inputs[j].path,
                                              g.order() - 1, (int)v.size());
