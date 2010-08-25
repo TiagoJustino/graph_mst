@@ -4,6 +4,7 @@
 #include "graph.h"
 #include "kruskal.h"
 #include "prim.h"
+#include "boruvka.h"
 #include "edge.h"
 #include "vertex.h"
 
@@ -27,8 +28,8 @@ const struct {
     { NULL, 0.0 }
 };
 
-vector<Edge> (*make_mst[])(Graph&) = {kruskal, prim, NULL};
-char* algorithm[] = {(char *)"kruskal", (char *)"prim"};
+vector<Edge> (*make_mst[])(Graph&) = {kruskal, prim, boruvka, NULL};
+const char* algorithm[] = {"kruskal", "prim", "boruvka"};
 
 class GraphMstTest : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE( GraphMstTest );

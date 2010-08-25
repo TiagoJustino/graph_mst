@@ -18,6 +18,6 @@ QMAKE_CXXFLAGS_DEBUG += -g3 -O0 -Werror
 
 # Input
 HEADERS += edge.h graph.h kruskal.h vertex.h disjoint_sets.h prim.h \
-           binary_heap.h triangle.h
+           binary_heap.h triangle.h boruvka.h
 SOURCES += edge.cpp graph.cpp kruskal.cpp vertex.cpp disjoint_sets.cpp \
-           prim.cpp graph_mst_test.cpp main_test.cpp triangle.c
+           prim.cpp graph_mst_test.cpp main_test.cpp triangle.c boruvka.cpp

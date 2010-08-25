@@ -1,6 +1,7 @@
 #ifndef EDGE_H
 #define EDGE_H
 
+#include <string>
 #include "vertex.h"
 #include <gmpxx.h>
 
@@ -12,10 +13,12 @@ private:
 public:
     Edge(Vertex& v1, Vertex& v2, mpf_class cost);
     Edge(const Edge& e);
+    Edge(Edge& e);
     Vertex& getV1();
     Vertex& getV2();
     mpf_class getCost();
     bool operator>(const Edge& other) const;
+    bool operator<(const Edge& other) const;
 };
 
 #endif // EDGE_H
