@@ -29,8 +29,17 @@ const struct {
     { NULL, 0.0 }
 };
 
+string outputs[] = {
+    "01_quadrado2009_mst.dot",
+    "02_DONI22009_mst.dot",
+    "03_serrinha2009_mst.dot",
+    "04_palmeiras2008_mst.dot",
+    "05_DONI12009_mst.dot",
+    "06_DONI12009_mst.dot"
+};
+
 vector<Edge> (*make_mst[])(Graph&) = {kruskal, prim, boruvka, NULL};
-const char* algorithm[] = {"kruskal", "prim", "boruvka"};
+string algorithm[] = {"kruskal", "prim", "boruvka"};
 
 class GraphMstTest : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE( GraphMstTest );
@@ -59,12 +68,13 @@ public:
 
     void testMst() {
         for (int i = 0; make_mst[i] != NULL; ++i) {
-            printf("Algorithm = [%s]\n", algorithm[i]);
+            printf("Algorithm = [%s]\n", algorithm[i].c_str());
             for (int j = 0; inputs[j].path != NULL; ++j) {
                 printf("Input = [%s]\n", inputs[j].path);
                 Graph g = getGraph(inputs[j].path);
+                if(!i) g.to_dot("ini");
                 vector<Edge>v = make_mst[i](g);
-                Graph::to_dot(v, "graph.dot");
+                Graph::to_dot(v, (algorithm[i] + "_" + outputs[j]).c_str());
                 CPPUNIT_ASSERT_EQUAL_MESSAGE(inputs[j].path,
                                              g.order() - 1, (int)v.size());
                 areSame(inputs[j].cost, weight(v).get_d());

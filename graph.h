@@ -14,7 +14,7 @@ class Graph
 {
 private:
     //Attributes:
-    QString name;
+    std::string name;
     vector<Vertex> vertices;
     vector<Edge> edges;
 
@@ -34,6 +34,7 @@ public:
     int order();
 
     static void to_dot(vector<Edge> edges, const char *path);
+    void to_dot(const std::string sufix);
     static std::string mpfToString(mpf_class n);
 };
 

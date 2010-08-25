@@ -1,0 +1,221 @@
+% LaTeX document template.
+% Author: Rudy Matela
+% e-mail: rudy.matela@gmail.com
+% date: 2008-11-08 23:20
+
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{verbatim}
+\usepackage{a4wide}
+\usepackage{sty/macros}
+
+\title{Algoritmos para Árvore Geradora Mínima}
+\author{ Renato Aguiar \and Tiago Justino }
+\date{
+    Prof. Marcos Negreiros \\
+	Universidade Estadual do Ceará \\
+	$\cdots$ \\
+	\today
+}
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\pagebreak
+
+\section{Objetivos}
+
+\begin{enumerate}
+\item Mostre, implemente e avalie os algoritmos PRIM, KRUSKAL e BORUVKA da árvore
+geradora mínima, usando estruturas de prioridade Fibonacci e Relações de
+Equivalência. Mostre as diferenças entre os algoritmos avaliando o seu
+comportamento conforme tipos específicos de grafos indicados pelo professor.
+Estudando também a corretude dos métodos.
+
+\item Desenvolva adaptações nos algoritmos da questão anterior, e agora avalie o
+seu comportamento para as seguintes situações:
+
+\begin{enumerate}
+\item mostrar as k árvores garadoras mínimas (é possível que todas as k sejam
+iguais em custo);
+
+\item mostrar a menor árvore de custo positivo, e grau de vértices nunca maior
+que $\gamma$ dado.
+
+\item mostrar as menores subárvores com custo positivo, admitindo que nenhuma
+subárvore excede um tamanho especificado dmax.
+
+\item compor os itens b e c em uma única visualização (ativando as duas
+restrições simultaneamente).
+\end{enumerate}
+
+Para todos os casos anteriores considere:
+
+
+\item Projete, avalie a corretude, implemente e teste os seguintes algoritmos
+para o problema da AGM com restrição de grau:
+
+\begin{enumerate}
+\item Um algoritmo de Programação Dinâmica;
+\item Um algoritmo Exaustivo puro;
+\item Um algoritmo Las Vegas
+\end{enumerate}
+
+\end{enumerate}
+
+Apresente um relatório que mostra claramente o que foi feito em cada questão
+acima e os algoritmos utilizados. Os algoritmos acima têm que ser
+determinísticos e podem compor de forma hibrida tipos de diversas naturezas.
+
+Para as questões acima, implementar algoritmos usando uma interface visual que
+permita ver o a instância de teste e o resultado visual, custo da solução final
+obtida, assim como o tempo gasto do processo.
+
+Os grafos devem ser lidos do seguinte modo: GRAFO.TXT // Arquivo Texto
+
+NV, TG, NE //Numero de Vertices, Tipo do Grafo (Euclidiano ou Simétrico), Numero
+de elos se simétrico.
+
+COX COY // Indice do Vertice e Coordenadas
+
+$\cdots$
+
+COX COY // Ultimo Vertice - NV
+
+I J W(I,J) // I < J, Elo do grafo e Custo ** Se não tiver elos, esta parte
+estará vazia
+
+$\cdots$
+
+K,L W(K,L) // Ultimo elo
+
+PS.: 10 instâncias de teste são fornecidas pelo professor. As instâncias
+euclidianas não possuem ligações. Caso alguma isntância não esteja no formato
+padrão, ajuste-as para que estejam dentro do formato.
+
+\section{Fundamentação Teórica}
+%\subsection{Grafo} %548
+%\subsection{Árvore}
+\subsection{Minimum Spanning Tree} %584
+Dado um grafo simétrico conexo $G(V,E)$ onde $V$ são os vértices e $E$ é um
+conjunto de elos possíveis entre pares de vértices e para cada elo $(u, v) \in
+E$, temos um peso $w(u, v)$ especificando o custo (ou a distância) para conectar
+$u$ e $v$. Desejamos então encontrar um subconjunto aciclico $T \subseteq E$ que
+conecte todos os vértices e cujo peso total $w(T) = \sum_{(u, v) \in T} w(u, v)$
+seja minimizado. Uma vez que $T$ é aciclico e conecta todos os vertices, ele
+deve formar uma árvore que chamaremos de árvore geradora (spanning tree), já que
+cobre todos os vértices do grafo $G$\cite[p. 584]{cormen2001introduction}.
+
+%QUADRADO2009_ini.dot kruskal_01_quadrado2009_mst.dot
+
+A figura \ref{fig:kruskal_01_quadrado2009_mst} mostra um exemplo de uma MST para
+o grafo \ref{fig:QUADRADO2009_ini}.
+
+\fig[.6]{QUADRADO2009_ini}{Um grafo direcional}
+\fig[.6]{kruskal_01_quadrado2009_mst}{Uma MST para \ref{fig:QUADRADO2009_ini}}
+
+Neste trabalho iremos explorar os algoritmos de Prim, Kruskal e Boruvka que
+podem ser implementados com complexidade $O(E lg V)$ utilizando heaps binarios.
+Com a utilização de heaps de Fibonacci o algoritmo de Prim possui complexidade
+$O(E + V lg V)$, o que pode apresentar um ganho de performance mas somente
+quando $|E|$ for muito maior que $|V|$.
+
+\subsection{Euclidian Minimum Spanning Tree}
+
+%A Euclidean graph is a graph in which the vertices represent points in the
+%plane, and the edges are assigned lengths equal to the Euclidean distance
+%between those points. The Euclidean minimum spanning tree is the minimum
+%spanning tree of a Euclidean complete graph. It is also possible to define
+%graphs by conditions on the distances; in particular, a unit distance graph is
+%formed by connecting pairs of points that are a unit distance apart in the
+%plane. The Hadwiger–Nelson problem concerns the chromatic number of these
+%graphs.
+
+Um Grafo Euclidiano é um grafo cujos vértices representam pontos em um plano e
+cujas arestas possuem peso igual a distância euclidiana entre esses pontos. A
+EMST (Euclidian Minimum Spanning Tree - Árvore Geradora Mínima Euclidiana) é uma
+MST para um grafo Euclidiano. 
+
+%The simplest algorithm to find an EMST, given n points, is to actually construct
+%the complete graph on n vertices, which has n(n-1)/2 edges, compute each edge
+%weight by finding the distance between each pair of points, and then run a
+%standard minimum spanning tree algorithm (such as the version of Prim's
+%algorithm or Kruskal's algorithm) on it. Since this graph has Θ(n2) edges for n
+%distinct points, constructing it already requires Ω(n2) time. This solution also
+%requires Ω(n2) space to store all the edges.
+
+%A better approach to finding the EMST in a plane is to note that it is a
+%subgraph of every Delaunay triangulation of the n points, a much-reduced set of
+%edges:
+
+%1. Compute the Delaunay triangulation in O(n log n) time and O(n) space.
+%Because the Delaunay triangulation is a planar graph, and there are no more than
+%three times as many edges as vertices in any planar graph, this generates only
+%O(n) edges.  2. Label each edge with its length.  3. Run a graph minimum
+%spanning tree algorithm on this graph to find a minimum spanning tree. Since
+%there are O(n) edges, this requires O(n log n) time using any of the standard
+%minimum spanning tree algorithms such as Borůvka's algorithm, Prim's algorithm,
+%or Kruskal's algorithm.
+
+%The final result is an algorithm taking O(n log n) time and O(n) space.
+
+%If the input coordinates are integers and can be used as array indices, faster
+%algorithms are possible: the Delaunay triangulation can be constructed by a
+%randomized algorithm in O(n log log n) expected time.[1] Additionally, since the
+%Delaunay triangulation is a planar graph, its minimum spanning tree can be found
+%in linear time by a variant of Borůvka's algorithm that removes all but the
+%cheapest edge between each pair of components after each stage of the
+%algorithm.[3] Therefore, the total expected time for this algorithm is O(n log
+%log n).[1]
+
+O algoritmo mais simples para encontrar uma EMST é: dados $n$ pontos, construir
+o grafo completo nos $n$ vértices, que tem $n(n-1)/2$ arestas, computar o peso
+de cada aresta encontrando a distância entre cada par de pontos e entâo executar
+algum dos algoritmos de MST (Prim, Kruskal ou Boruvka). Como o grafo tem
+$O(n^2)$ arestas para $n$ pontos distintos, a construção do grafo já requer
+$O(n^2)$ de tempo e espaço.
+
+%02_DONI22009_delaunay.dot 02_DONI22009_euclidean.dot
+
+Uma abordagem mais eficiente é construir um grafo pela triangulação de Delaunay
+sobre os $n$ pontos e então executar algum algoritmo de MST no grafo gerado uma
+vez que uma EMST em um plano é um subgrafo da triangulação de Delaunay nos $n$
+pontos. Uma prova disso pode ser encontrada em \cite{subramani-computational}.
+
+A triangulação de Delaunay requer $O(n log n)$ de tempo e $O(n)$ de espaço e
+gera um número de arestas da ordem de $n$. Como o número de arestas é da ordem
+de $n$ a execução de um dos três algoritmos de MST citados levará tempo $O(n log
+n)$
+
+Em nosso trabalho de implementação utilizamos a biblioteca Triangle que pode ser
+baixada no site http://www.cs.cmu.edu/~quake/triangle.html e utilizada
+livremente para fins não comerciais. %A figura \ref{fig:02_DONI22009_delaunay}
+%mostra a triangulação de Delaunay obtida pela biblioteca para a entrada
+%DONI22009 (figura \ref{fig:02_DONI22009_euclidean}).
+A partir da entrada DONI22009 (apresentada logo abaixo) foi gerado o grafo
+enclidiano mostrado em \ref{fig:02_DONI22009_euclidean}. Em seguida a
+triangulação de Delaunay mostrada em \ref{fig:02_DONI22009_delaunay}. Por último
+foi gerada a EMST \ref{fig:kruskal_02_DONI22009_mst}.
+
+\verbatiminput{DONI22009.txt}
+
+\fig[.6]{02_DONI22009_euclidean}{Um grafo Euclidiano}
+\fig[.6]{02_DONI22009_delaunay}{Uma triangulação de Delaunay para o grafo
+\ref{fig:02_DONI22009_euclidean}}
+\fig[.6]{kruskal_02_DONI22009_mst}{Uma EMST paga o grafo Euclidiano
+\ref{fig:02_DONI22009_euclidean}}
+
+%\bibliographystyle{plain}
+%\bibliographystyle{cell}
+\bibliographystyle{alpha}
+\bibliography{bib}
+
+\end{document}
+

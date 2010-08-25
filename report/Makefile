@@ -1,5 +1,6 @@
 # Makefile from textemplate
 
+TARGET=mst
 
 # Includes
 
@@ -17,16 +18,16 @@ include imagerules.mk
 
 # Variables
 
-FIGS=fig/graph.pdf fig/watermark.pdf fig/diagram.pdf fig/euler.pdf
+FIGS=fig/kruskal_01_quadrado2009_mst.pdf fig/QUADRADO2009_ini.pdf \
+     fig/02_DONI22009_euclidean.pdf fig/02_DONI22009_delaunay.pdf \
+     fig/kruskal_02_DONI22009_mst.pdf
 
 
 # Making Rules
 
-all: textemplate.pdf prestemplate.pdf
+all: $(TARGET).pdf
 
-textemplate.pdf: textemplate.tex bib.bib $(FIGS)
-
-pretexmplate.pdf: prestemplate.tex $(FIGS)
+$(TARGET).pdf: $(TARGET).tex bib.bib $(FIGS)
 
 .PHONY: figs
 figs: $(FIGS)
@@ -36,7 +37,7 @@ figs: $(FIGS)
 
 .PHONY: clean cleanfigs
 clean: cleanfigs
-	rm -f *~ *.aux *.bbl *.blg *.log *.toc textemplate.pdf
+	rm -f *~ *.aux *.bbl *.blg *.log *.toc $(TARGET).pdf
 
 cleanfigs:
 	rm -f $(FIGS)

@@ -18,7 +18,8 @@ private:
 
 public:
     Vertex(int id, mpf_class x, mpf_class y);
-    int getId();
+    Vertex(const Vertex& v);
+    int getId() const;
     mpf_class getX();
     mpf_class getY();
     void add_neighbor(int id, mpf_class cost);

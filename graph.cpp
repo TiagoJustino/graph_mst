@@ -15,6 +15,7 @@ extern "C"
 #endif
 
 #define STR_NUM_LEN 64
+#define MAX_GRAPH_NAME 512
 
 mpf_class Graph::calculateDistance(Vertex a, Vertex b) {
     mpf_class x = b.getX() - a.getX();
@@ -78,11 +79,12 @@ Graph::Graph()
 
 Graph::Graph(FILE *f)
 {
-    char mp_str[STR_NUM_LEN];
+    char mp_str[STR_NUM_LEN], _name[MAX_GRAPH_NAME];
     int n_vertices, n_edges, r;
     short int type;
     //TODO: Read graph name
-    r = fscanf(f, " %*s ");
+    r = fscanf(f, " %[^\n]s ", _name);
+    name = _name;
     r = fscanf(f, " %d %hd %d ", &n_vertices, &type, &n_edges);
     if(type == 1) {
         for (int i = 0; i < n_vertices; ++i) {
@@ -158,4 +160,9 @@ void Graph::to_dot(vector<Edge> edges, const char *path)
     to_dot(edges, f);
     fprintf(f, "}");
     fclose(f);
+}
+
+void Graph::to_dot(const std::string sufix)
+{
+    to_dot(this->edges, (this->name + "_" + sufix + ".dot").c_str());
 }
