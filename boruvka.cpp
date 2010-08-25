@@ -97,6 +97,7 @@ vector<Edge> boruvka(Graph &g)
         }
 //  9   Add the resulting set of edges E to T.
         for (list<edge_t>::iterator edge = e.begin(); edge != e.end(); ++edge) {
+            if(cc.FindSet(edge->v1) == cc.FindSet(edge->v2)) continue;
             cc.Union(cc.FindSet(edge->v1), cc.FindSet(edge->v2));
             Edge te(g.findVertexById(edge->v1), g.findVertexById(edge->v2), edge->w);
             t.push_back(te);
