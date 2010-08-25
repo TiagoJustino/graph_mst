@@ -25,6 +25,7 @@ const struct {
     { "input/03_serrinha2009.txt", 15739.05 },
     { "input/04_palmeiras2008.txt", 555.15 },
     { "input/05_DONI12009.txt", 255.9 },
+    { "input/06_DONI12009.txt", 345.3186 },
     { NULL, 0.0 }
 };
 
