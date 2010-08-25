@@ -14,6 +14,7 @@ include imagerules.mk
 	grep -q '^\\bibliography{.*}$$' $< && \
 		bibtex $* && pdflatex -draftmode $< || true
 	pdflatex $<
+	pdflatex $<
 
 
 # Variables
