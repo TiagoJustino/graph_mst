@@ -193,15 +193,47 @@ n)$
 
 Em nosso trabalho de implementação utilizamos a biblioteca Triangle que pode ser
 baixada no site http://www.cs.cmu.edu/~quake/triangle.html e utilizada
-livremente para fins não comerciais. %A figura \ref{fig:02_DONI22009_delaunay}
-%mostra a triangulação de Delaunay obtida pela biblioteca para a entrada
-%DONI22009 (figura \ref{fig:02_DONI22009_euclidean}).
-A partir da entrada DONI22009 (apresentada logo abaixo) foi gerado o grafo
-enclidiano mostrado em \ref{fig:02_DONI22009_euclidean}. Em seguida a
-triangulação de Delaunay mostrada em \ref{fig:02_DONI22009_delaunay}. Por último
-foi gerada a EMST \ref{fig:kruskal_02_DONI22009_mst}.
+livremente para fins não comerciais.  A partir da entrada DONI22009 (apresentada
+logo abaixo) foi gerado o grafo enclidiano mostrado em
+\ref{fig:02_DONI22009_euclidean}. Em seguida a triangulação de Delaunay mostrada
+em \ref{fig:02_DONI22009_delaunay}. Por último foi gerada a EMST
+\ref{fig:kruskal_02_DONI22009_mst}.
 
 \verbatiminput{DONI22009.txt}
+
+\subsection{Degree Constrained Minimum Spanning Tree}
+
+%One of the main goals in the design process is to reach total connectivity at
+%minimum cost. Furthermore, additional constraints must be met, such as a
+%restricted number of connections to a physical unit. Similar problems arise in
+%the planning of road maps, where intersections can only be established among a
+%small number of roads. In the field of integrated circuit design we are faced
+%with the constraint that the number of wired connections to an electronic
+%component is limited.  The production of the circuit board shall be at minimum
+%cost.  Problems of this kind can be modelled as the degree-constrained minimum
+%span- ning tree problem (or DCMST problem for short).
+
+Um dos principais objetivos no processo de desenvolvimento de redes é atingir
+uma conectividade completa à um custo mínimo. Constantemente, algumas outras
+restrições devem ser satisfeitas, como um número restrito de conecções a uma
+unidade física. Problemas similares surgem no desenvolvimento de circuitos
+integrados, onde nos deparamos com uma restrição em relação ao número de fios
+conectados a um componente eletrônico. Problemas dessa natureza podem ser
+modelados como uma DCMST (Degree Constrained Minimum Spanning Tree - Árvore
+Geradora Mínima com Restrição de Grau)\cite{behle2007primal}.
+
+Em 1979, Garey \& Johnson provaram em \cite{garey1979computers} que o problema
+da DCMST é NP-Completo. Isso pode ser mostrado com uma redução a partir do
+problema do caminho Hamiltoniano. Devido a sua complexidade existem uma série de
+proposta de algoritmos aproximativos construtivos e metaheurísticas para a
+solução deste problema.
+
+Em nosso trabalho implementamos dois algoritmos aproximativos constutivos para
+esse problema. O primeiro deles é uma adaptação do prim, também conhecido como
+d-prim que impede a entrada de uma aresta caso viole a restrição de
+grau\cite{narula1980degree}. O segundo é uma adaptação do algoritmo de kruskal,
+que, de forma semelhante ao primeiro, impede a entrada de uma aresta que viole a
+restrição de grau.
 
 \section{Resultados}
 
