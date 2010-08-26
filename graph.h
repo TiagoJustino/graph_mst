@@ -1,7 +1,6 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include <QtCore>
 #include <gmpxx.h>
 #include <vector>
 #include <string>

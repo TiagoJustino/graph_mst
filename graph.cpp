@@ -1,4 +1,3 @@
-#include <QtCore>
 #include <gmpxx.h>
 #include <iostream>
 #include <cstdlib>
@@ -71,10 +70,6 @@ void Graph::setGraphFromDelaunay(FILE *f, int n_vertices) {
 
 Graph::Graph()
 {
-    /*
-    this->vertices = new QSet<Vertex>();
-    this->edges = new QSet<Edge>();
-    */
 }
 
 Graph::Graph(FILE *f)

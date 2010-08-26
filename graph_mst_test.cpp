@@ -15,7 +15,10 @@
 #include <vector>
 #include <cmath>
 #include <limits>
+
 using namespace std;
+
+#define MAX(a, b) (b>a?b:a)
 
 const struct {
     const char *path;
@@ -40,11 +43,13 @@ string outputs[] = {
 };
 
 vector<Edge> (*make_mst[])(Graph&) = {kruskal, prim, boruvka, NULL};
+vector<Edge> (*make_dcmst[])(Graph&, int) = {kruskal, prim, NULL};
 string algorithm[] = {"kruskal", "prim", "boruvka"};
 
 class GraphMstTest : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE( GraphMstTest );
     CPPUNIT_TEST( testMst );
+    CPPUNIT_TEST( testMstMaxDegree );
     CPPUNIT_TEST_SUITE_END();
 
 private:
@@ -60,6 +65,17 @@ private:
     }        
     void areSame(double a, double b) {
         CPPUNIT_ASSERT_EQUAL((long long)(10000 * a), (long long)(10000 * b));
+    }
+    int getMaxDegree(vector<Edge>& v, int vertices) {
+        vector<int> d(vertices, 0);
+        int max=0;
+        vector<Edge>::iterator i;
+        for(i = v.begin(); i != v.end(); ++i) {
+            ++d[i->getV1().getId()];
+            ++d[i->getV2().getId()];
+            max=MAX(max, MAX(d[i->getV1().getId()], d[i->getV2().getId()]));
+        }
+        return max;
     }
 
 public:
@@ -91,6 +107,24 @@ public:
                 // - Actual  : 255.9
                 // - input/05_DONI12009.txt
                 // WTF !!!!!!!!
+            }
+        }
+    }
+    void testMstMaxDegree() {
+        int max_degree = 2;
+        for(int i = 0; make_dcmst[i]; ++i) {
+            printf("%s (max degree: %d)\n", algorithm[i].c_str(), max_degree);
+            for (int j = 0; inputs[j].path != NULL; ++j) {
+                clock_t start = clock();
+                printf("Input [%s]:\n", inputs[j].path);
+                Graph g = getGraph(inputs[j].path);
+                vector<Edge>v = make_dcmst[i](g, max_degree);
+                printf("    Time elapsed = [%lf], ", ((double)clock() - start) / CLOCKS_PER_SEC);
+                printf("Weight = [%s]\n", Graph::mpfToString(weight(v)).c_str());
+                Graph::to_dot(v, (algorithm[i] + "dcmst" + outputs[j]).c_str());
+                //CPPUNIT_ASSERT_EQUAL_MESSAGE(inputs[j].path,
+                //g.order() - 1, (int)v.size());
+                CPPUNIT_ASSERT_EQUAL(getMaxDegree(v, g.order()), max_degree);
             }
         }
     }

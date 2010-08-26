@@ -36,3 +36,8 @@ list<pair<int, mpf_class> > Vertex::get_neighbors()
 {
     return this->neighbors;
 }
+
+int Vertex::degree()
+{
+    return this->neighbors.size();
+}

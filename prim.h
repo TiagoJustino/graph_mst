@@ -6,5 +6,6 @@
 #include <vector>
 
 vector<Edge> prim(Graph& g);
+vector<Edge> prim(Graph& g, int max_degree);
 
 #endif // PRIM_H
