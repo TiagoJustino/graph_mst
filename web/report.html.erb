@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Grafo AGM</title>
+  </head>
+  <body>
+    <h1>Grafo AGM</h1>
+    <h2>Árvore Geradora Mínima</h2>
+    <% data["mst"].each do |r| %>
+    <p>
+      <ul>
+        <li>Algoritmo: <%= r["algorithm"] %></li>
+        <li>Peso: <%= r["weight"] %></li>
+        <li>Tempo: <%= r["time elapsed"] %>s</li>
+      </ul>
+    </p>
+    <% end %>
+    <h2>Árvore Gerdora Mínima com Restrição de Grau</h2>
+    <% data["dcmst"].each do |r| %>
+    <p>
+      <ul>
+        <li>Algoritmo: <%= r["algorithm"] %></li>
+        <li>Grau Máximo: <%= r["max degree"] %></li>
+        <li>Número de componentes: <%= r["forest size"] %></li>
+        <li>Peso: <%= r["weight"] %></li>
+        <li>Tempo: <%= r["time elapsed"] %>s</li>
+      </ul>
+    </p>
+    <% end %>
+  </body>
+</html>
