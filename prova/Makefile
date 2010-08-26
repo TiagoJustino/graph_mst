@@ -19,8 +19,12 @@ include imagerules.mk
 
 # Variables
 
-FIGS=
-
+FIGS= fig/5diamonds_grf_dcmst_kruskal_2.pdf fig/5diamonds_grf_dcmst_prim_2.pdf \
+fig/Euclid301_GRF_dcmst_kruskal_2.pdf fig/Euclid301_GRF_dcmst_prim_2.pdf \
+fig/Euclid303_txt_dcmst_kruskal_2.pdf fig/Euclid303_txt_dcmst_prim_2.pdf \
+fig/Euclid306_txt_dcmst_kruskal_2.pdf fig/Euclid306_txt_dcmst_prim_2.pdf \
+fig/P20_GRF_dcmst_kruskal_2.pdf fig/P20_GRF_dcmst_prim_2.pdf fig/P22_GRF_dcmst_kruskal_2.pdf \
+fig/P22_GRF_dcmst_prim_2.pdf fig/PEARN01_grf_dcmst_kruskal_2.pdf fig/PEARN01_grf_dcmst_prim_2.pdf
 
 # Making Rules
 
