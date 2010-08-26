@@ -11,7 +11,7 @@
         <li>Número de Vertices: <%= data["number of vertices"] %></li>
         <li>Número de Arestas: <%= data["number of edges"] %></li>
       </ul>
-      <a href="/img/original.png">Ver Imagem (Original)</a>
+      <a href="/img/original.png">Gerar Imagem (Original)</a>
     </p>
     <h2>Árvore Geradora Mínima</h2>
     <% data["mst"].each do |r| %>
@@ -20,7 +20,7 @@
         <li>Algoritmo: <%= r["algorithm"] %></li>
         <li>Peso: <%= r["weight"] %></li>
         <li>Tempo: <%= r["time elapsed"] %>s</li>
-        <li><a href="/img/<%= r["id"] %>.png">Ver Imagem</a></li>
+        <li><a href="/img/<%= r["id"] %>.png">Gerar Imagem</a></li>
       </ul>
     </p>
     <% end %>
@@ -33,7 +33,7 @@
         <li>Componentes: <%= r["forest size"] %></li>
         <li>Peso: <%= r["weight"] %></li>
         <li>Tempo: <%= r["time elapsed"] %>s</li>
-        <li><a href="/img/<%= r["id"] %>.png">Ver Imagem</a></li>
+        <li><a href="/img/<%= r["id"] %>.png">Gerar Imagem</a></li>
       </ul>
     </p>
     <% end %>
