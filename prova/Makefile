@@ -1,6 +1,6 @@
 # Makefile from textemplate
 
-TARGET=mst
+TARGET=prova
 
 # Includes
 
