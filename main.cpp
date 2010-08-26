@@ -29,6 +29,14 @@ mpf_class weight( vector<Edge>& v ) {
     return t;
 }
 
+string dot_path(int id)
+{
+    string p;
+    char buffer[256];
+    sprintf(buffer, "tmp/%d.dot", id);
+    return string(buffer);
+}
+
 int getMaxDegree(vector<Edge>& v, int vertices) {
     vector<int> d(vertices, 0);
     int max=0;
@@ -43,24 +51,29 @@ int getMaxDegree(vector<Edge>& v, int vertices) {
 
 int main(int argc, char **argv)
 {
+    int id = 0;
+
     if(argc < 2) {
         printf("Usage: %s file\n", argv[0]);
         return 0;
     }
 
     puts("{");
+    Graph g = Graph(fopen(argv[1], "r"));
+    printf("  \"number of vertices\": %d,\n", (int)g.getVertices().size());
+    printf("  \"number of edges\": %d,\n", (int)g.getEdges().size());
     puts("  \"mst\": [");
     for (int i = 0; make_mst[i] != NULL; ++i) {
         puts("    {");
+        printf("      \"id\": %d,\n", id++);
         printf("      \"algorithm\": \"%s\",\n", algorithm[i].c_str());
         clock_t start = clock();
         Graph g = Graph(fopen(argv[1], "r"));
-        g.to_dot("ini");
+        Graph::to_dot(g.getEdges(), "tmp/original.dot");
         vector<Edge>v = make_mst[i](g);
         printf("      \"time elapsed\": %lf,\n", ((double)clock() - start) / CLOCKS_PER_SEC);
         printf("      \"weight\": %s\n", Graph::mpfToString(weight(v)).c_str());
-        //string str(argv[1]);
-        Graph::to_dot(v, (string(argv[1]) + "_" + algorithm[i] + ".dot").c_str());
+        Graph::to_dot(v, dot_path(id-1).c_str());
         printf("    }");
         if (make_mst[i+1] != NULL)
             puts(",");
@@ -77,6 +90,7 @@ int main(int argc, char **argv)
         max_max_degree = getMaxDegree(v, g.order());
         for(max_degree = 2; max_degree <= max_max_degree; ++max_degree) {
             puts("    {");
+            printf("      \"id\": %d,\n", id++);
             printf("      \"algorithm\": \"%s\",\n", algorithm[i].c_str());
             printf("      \"max degree\": %d,\n", max_degree);
             clock_t start = clock();
@@ -85,7 +99,7 @@ int main(int argc, char **argv)
             printf("      \"time elapsed\": %lf,\n", ((double)clock() - start) / CLOCKS_PER_SEC);
             printf("      \"forest size\": %d,\n", (int)(g.order() - v.size()));
             printf("      \"weight\": %s\n", Graph::mpfToString(weight(v)).c_str());
-            Graph::to_dot(v, (algorithm[i] + "dcmst.dot").c_str());
+            Graph::to_dot(v, dot_path(id-1).c_str());
             printf("    }");
             if (make_dcmst[i+1] != NULL or max_degree != max_max_degree)
                 puts(",");
