@@ -111,20 +111,24 @@ public:
         }
     }
     void testMstMaxDegree() {
-        int max_degree = 2;
+        int max_degree, max_max_degree;
         for(int i = 0; make_dcmst[i]; ++i) {
-            printf("%s (max degree: %d)\n", algorithm[i].c_str(), max_degree);
             for (int j = 0; inputs[j].path != NULL; ++j) {
-                clock_t start = clock();
-                printf("Input [%s]:\n", inputs[j].path);
                 Graph g = getGraph(inputs[j].path);
-                vector<Edge>v = make_dcmst[i](g, max_degree);
-                printf("    Time elapsed = [%lf], ", ((double)clock() - start) / CLOCKS_PER_SEC);
-                printf("Weight = [%s]\n", Graph::mpfToString(weight(v)).c_str());
-                Graph::to_dot(v, (algorithm[i] + "dcmst" + outputs[j]).c_str());
-                //CPPUNIT_ASSERT_EQUAL_MESSAGE(inputs[j].path,
-                //g.order() - 1, (int)v.size());
-                CPPUNIT_ASSERT(getMaxDegree(v, g.order()) <= max_degree);
+                vector<Edge>v = make_mst[i](g);
+                max_max_degree = getMaxDegree(v, g.order());
+                for(max_degree = 2; max_degree <= max_max_degree; ++max_degree) {
+                    clock_t start = clock();
+                    printf("%s (max degree: %d)\n", algorithm[i].c_str(), max_degree);
+                    printf("Input [%s]:\n", inputs[j].path);
+                    Graph g = getGraph(inputs[j].path);
+                    vector<Edge>v = make_dcmst[i](g, max_degree);
+                    printf("    Time elapsed = [%lf], ", ((double)clock() - start) / CLOCKS_PER_SEC);
+                    printf("Forest_size = [%d], ", (int)(g.order() - v.size()));
+                    printf("Weight = [%s]\n", Graph::mpfToString(weight(v)).c_str());
+                    Graph::to_dot(v, (algorithm[i] + "dcmst" + outputs[j]).c_str());
+                    CPPUNIT_ASSERT(getMaxDegree(v, g.order()) <= max_degree);
+                }
             }
         }
     }
