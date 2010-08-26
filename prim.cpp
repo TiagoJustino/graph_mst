@@ -84,37 +84,48 @@ vector<Edge> prim(Graph& g, int max_degree)
     vector<int> degree(g.order(), 0);
     int n = g.order() - 1;
     list<pair<int, mpf_class> > _neighbors;
-    list<pair<int, mpf_class> >::iterator _i;
+    list<pair<int, mpf_class> >::iterator _it;
 
-    marked[0] = true;
-    _neighbors = g.findVertexById(0).get_neighbors();
-    for(_i = _neighbors.begin(); _i != _neighbors.end(); ++_i) {
-        Weight w(_i->first, 0, _i->second);
-        heap.insert(w);
-    }
+    while(n) {
+        int i;
+        for(i = 0; i < g.order(); i++)
+            if(marked[i] == false)
+                break;
+        if(i == g.order())
+            break;
+        marked[i] = true;
+        _neighbors = g.findVertexById(i).get_neighbors();
+        for(_it = _neighbors.begin(); _it != _neighbors.end(); ++_it) {
+            if(marked[_it->first])
+                continue;
+            Weight w(_it->first, i, _it->second);
+            heap.insert(w);
+        }
 
-    while(n and !heap.empty()) {
-        Weight w = heap.pop();
-        if(marked[w.vertex]) continue;
-        if(max_degree >= 0 and (degree[w.vertex] == max_degree or
-                                degree[w.parent] == max_degree))
-            continue;
-        Vertex v1(g.findVertexById(w.parent));
-        Vertex v2(g.findVertexById(w.vertex));
-        Edge e(v1, v2, w.weight);
+        while(!heap.empty()) {
+            Weight w = heap.pop();
+            if(marked[w.vertex])
+                continue;
+            if(max_degree >= 0 and (degree[w.vertex] == max_degree or
+                                    degree[w.parent] == max_degree))
+                continue;
+            Vertex v1(g.findVertexById(w.parent));
+            Vertex v2(g.findVertexById(w.vertex));
+            Edge e(v1, v2, w.weight);
 
-        ++degree[w.vertex];
-        ++degree[w.parent];
-        marked[w.vertex] = true;
-        l.push_back(e);
-        --n;
+            ++degree[w.vertex];
+            ++degree[w.parent];
+            marked[w.vertex] = true;
+            l.push_back(e);
+            --n;
 
-        list<pair<int, mpf_class> > neighbors = g.findVertexById(w.vertex).get_neighbors();
-        list<pair<int, mpf_class> >::iterator i = neighbors.begin();
-        for(; i != neighbors.end(); ++i) {
-            if(marked[i->first]) continue;
-            Weight neww(i->first, w.vertex, i->second);
-            heap.insert(neww);
+            list<pair<int, mpf_class> > neighbors = g.findVertexById(w.vertex).get_neighbors();
+            list<pair<int, mpf_class> >::iterator it = neighbors.begin();
+            for(; it != neighbors.end(); ++it) {
+                if(marked[it->first]) continue;
+                Weight neww(it->first, w.vertex, it->second);
+                heap.insert(neww);
+            }
         }
     }
 

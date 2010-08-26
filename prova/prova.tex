@@ -60,10 +60,42 @@ de grau ($\delta=2$). Comente as diferençás encontradas.}
 
 Em nosso trabalho implementamos os as adaptações dos algoritmos de prim (d-prim)
 e kruskal para restrição de grau. Executamos para todas as entradas fornecidas e
-obtivemos os seguintes dados:
+pudemos perceber que a adaptação do kruskal tem uma pequena vantagem em alguns
+poucos casos em relação ao prim, gerando um grafo final com um número um pouco
+menor de árvores. Em 2 dos 7 grafos testados a adaptação do kruskal apresentou
+um grafo final com uma aresta a mais que a adaptação do prim. Em questão de
+performance os dois foram igualmente rápidos, executando em menos de 0.01
+segundos.
+
+As imagens dos grafos são apresentados nas figuras de
+\ref{fig:5diamonds_grf_dcmst_kruskal_2} a \ref{fig:PEARN01_grf_dcmst_prim_2}.
 
 \input{2a.tex}
 
+\section{Testes Restrições}
+\subsection{Para o conjunto de dados de Grafos Euclidianos que você dispõe,
+verifique entre os métodos implementados com restrição de grau ($\delta_{max}=2,
+3, 4$), os tempos de processamento, custos atingidos e topologia, qual o de
+melhor de melhor desempenho, custo e comente seus resultados.}
+
+\input{3a.tex}
+
+\section{Anexo: Figuras}
+
+\fig[.6]{5diamonds_grf_dcmst_kruskal_2}{5diamonds\_grf\_dcmst\_kruskal\_2}
+\fig[.6]{5diamonds_grf_dcmst_prim_2}{5diamonds\_grf\_dcmst\_prim\_2}
+\fig[.6]{Euclid301_GRF_dcmst_kruskal_2}{Euclid301\_GRF\_dcmst\_kruskal\_2}
+\fig[.6]{Euclid301_GRF_dcmst_prim_2}{Euclid301\_GRF\_dcmst\_prim\_2}
+\fig[.6]{Euclid303_txt_dcmst_kruskal_2}{Euclid303\_txt\_dcmst\_kruskal\_2}
+\fig[.6]{Euclid303_txt_dcmst_prim_2}{Euclid303\_txt\_dcmst\_prim\_2}
+\fig[.6]{Euclid306_txt_dcmst_kruskal_2}{Euclid306\_txt\_dcmst\_kruskal\_2}
+\fig[.6]{Euclid306_txt_dcmst_prim_2}{Euclid306\_txt\_dcmst\_prim\_2}
+\fig[.6]{P20_GRF_dcmst_kruskal_2}{P20\_GRF\_dcmst\_kruskal\_2}
+\fig[.6]{P20_GRF_dcmst_prim_2}{P20\_GRF\_dcmst\_prim\_2}
+\fig[.6]{P22_GRF_dcmst_kruskal_2}{P22\_GRF\_dcmst\_kruskal\_2}
+\fig[.6]{P22_GRF_dcmst_prim_2}{P22\_GRF\_dcmst\_prim\_2}
+\fig[.6]{PEARN01_grf_dcmst_kruskal_2}{PEARN01\_grf\_dcmst\_kruskal\_2}
+\fig[.6]{PEARN01_grf_dcmst_prim_2}{PEARN01\_grf\_dcmst\_prim\_2}
 
 \end{document}
 
