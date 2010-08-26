@@ -6,6 +6,13 @@
   </head>
   <body>
     <h1>Grafo AGM</h1>
+    <p>
+      <ul>
+        <li>Número de Vertices: <%= data["number of vertices"] %></li>
+        <li>Número de Arestas: <%= data["number of edges"] %></li>
+      </ul>
+      <a href="/img/original.png">Ver Imagem (Original)</a>
+    </p>
     <h2>Árvore Geradora Mínima</h2>
     <% data["mst"].each do |r| %>
     <p>
@@ -13,6 +20,7 @@
         <li>Algoritmo: <%= r["algorithm"] %></li>
         <li>Peso: <%= r["weight"] %></li>
         <li>Tempo: <%= r["time elapsed"] %>s</li>
+        <li><a href="/img/<%= r["id"] %>.png">Ver Imagem</a></li>
       </ul>
     </p>
     <% end %>
@@ -22,9 +30,10 @@
       <ul>
         <li>Algoritmo: <%= r["algorithm"] %></li>
         <li>Grau Máximo: <%= r["max degree"] %></li>
-        <li>Número de componentes: <%= r["forest size"] %></li>
+        <li>Componentes: <%= r["forest size"] %></li>
         <li>Peso: <%= r["weight"] %></li>
         <li>Tempo: <%= r["time elapsed"] %>s</li>
+        <li><a href="/img/<%= r["id"] %>.png">Ver Imagem</a></li>
       </ul>
     </p>
     <% end %>
