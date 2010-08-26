@@ -124,7 +124,7 @@ public:
                 Graph::to_dot(v, (algorithm[i] + "dcmst" + outputs[j]).c_str());
                 //CPPUNIT_ASSERT_EQUAL_MESSAGE(inputs[j].path,
                 //g.order() - 1, (int)v.size());
-                CPPUNIT_ASSERT_EQUAL(getMaxDegree(v, g.order()), max_degree);
+                CPPUNIT_ASSERT(getMaxDegree(v, g.order()) <= max_degree);
             }
         }
     }

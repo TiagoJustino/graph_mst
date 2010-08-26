@@ -27,13 +27,12 @@ class Weight {
         };
 };
 
-vector<Edge> prim(Graph& g, int max_degree)
+vector<Edge> prim(Graph& g)
 {
     vector<Edge> l;
     BinaryHeap<Weight> heap;
     vector<bool> marked(g.order(), false);
     vector<BinaryHeapNode<Weight>*> nodes(g.order());
-    vector<int> degree(g.order(), 0);
     Weight initial(0, -1, 0.0); // parent -1 means no parent
 
     nodes[0] = heap.push_back(initial);
@@ -47,16 +46,9 @@ vector<Edge> prim(Graph& g, int max_degree)
     while(n and !heap.empty()) {
         Weight w = heap.pop();
         if(w.parent != -1) { // Parent not null
-            Vertex _v1 = g.findVertexById(w.parent);
-            Vertex _v2 = g.findVertexById(w.vertex);
-            Vertex v1(_v1.getId(), _v1.getX(), _v1.getY());
-            Vertex v2(_v2.getId(), _v2.getX(), _v2.getY());
-            if(max_degree > 0 and (degree[w.parent] == max_degree or
-                                   degree[w.vertex] == max_degree))
-                continue;
+            Vertex v1(g.findVertexById(w.parent));
+            Vertex v2(g.findVertexById(w.vertex));
 
-            ++degree[w.parent];
-            ++degree[w.vertex];
             Edge e(v1, v2, w.weight);
             marked[w.vertex] = true;
             l.push_back(e);
@@ -84,7 +76,47 @@ vector<Edge> prim(Graph& g, int max_degree)
     return l;
 }
 
-vector<Edge> prim(Graph& g)
+vector<Edge> prim(Graph& g, int max_degree)
 {
-    return prim(g, -1);
+    vector<Edge> l;
+    BinaryHeap<Weight> heap;
+    vector<bool> marked(g.order(), false);
+    vector<int> degree(g.order(), 0);
+    int n = g.order() - 1;
+    list<pair<int, mpf_class> > _neighbors;
+    list<pair<int, mpf_class> >::iterator _i;
+
+    marked[0] = true;
+    _neighbors = g.findVertexById(0).get_neighbors();
+    for(_i = _neighbors.begin(); _i != _neighbors.end(); ++_i) {
+        Weight w(_i->first, 0, _i->second);
+        heap.insert(w);
+    }
+
+    while(n and !heap.empty()) {
+        Weight w = heap.pop();
+        if(marked[w.vertex]) continue;
+        if(max_degree >= 0 and (degree[w.vertex] == max_degree or
+                                degree[w.parent] == max_degree))
+            continue;
+        Vertex v1(g.findVertexById(w.parent));
+        Vertex v2(g.findVertexById(w.vertex));
+        Edge e(v1, v2, w.weight);
+
+        ++degree[w.vertex];
+        ++degree[w.parent];
+        marked[w.vertex] = true;
+        l.push_back(e);
+        --n;
+
+        list<pair<int, mpf_class> > neighbors = g.findVertexById(w.vertex).get_neighbors();
+        list<pair<int, mpf_class> >::iterator i = neighbors.begin();
+        for(; i != neighbors.end(); ++i) {
+            if(marked[i->first]) continue;
+            Weight neww(i->first, w.vertex, i->second);
+            heap.insert(neww);
+        }
+    }
+
+    return l;
 }
