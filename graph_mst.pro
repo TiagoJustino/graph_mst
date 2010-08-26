@@ -3,8 +3,8 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = graph_mst
-;TARGET = graph_mst_test
+;TARGET = graph_mst
+TARGET = graph_mst_test
 DEPENDPATH += .
 INCLUDEPATH += .
 LIBS += -lgmpxx `cppunit-config --libs`
@@ -22,5 +22,5 @@ HEADERS += edge.h graph.h kruskal.h vertex.h disjoint_sets.h prim.h \
            binary_heap.h triangle.h boruvka.h
 SOURCES += edge.cpp graph.cpp kruskal.cpp vertex.cpp disjoint_sets.cpp \
            prim.cpp  triangle.c boruvka.cpp
-SOURCES += main.cpp
-;SOURCES += main_test.cpp graph_mst_test.cpp
+;SOURCES += main.cpp
+SOURCES += main_test.cpp graph_mst_test.cpp

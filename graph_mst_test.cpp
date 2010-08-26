@@ -24,22 +24,36 @@ const struct {
     const char *path;
     double cost;
 } inputs[] = {
-    { "input/01_quadrado2009.txt", 32.0 },
-    { "input/02_DONI22009.txt", 106.407933362449 },
-    { "input/03_serrinha2009.txt", 15739.05 },
-    { "input/04_palmeiras2008.txt", 555.15 },
-    { "input/05_DONI12009.txt", 255.9 },
-    { "input/06_DONI12009.txt", 345.3186 },
+    //{ "input/01_quadrado2009.txt", 32.0 },
+    //{ "input/02_DONI22009.txt", 106.407933362449 },
+    //{ "input/03_serrinha2009.txt", 15739.05 },
+    //{ "input/04_palmeiras2008.txt", 555.15 },
+    //{ "input/05_DONI12009.txt", 255.9 },
+    //{ "input/06_DONI12009.txt", 345.3186 },
+    { "5diamonds.grf", 0.0 },
+    { "Euclid301.GRF", 0.0 },
+    { "Euclid303.txt", 0.0 },
+    { "Euclid306.txt", 0.0 },
+    { "P20.GRF", 0.0 },
+    { "P22.GRF", 0.0 },
+    { "PEARN01.grf", 0.0 },
     { NULL, 0.0 }
 };
 
 string outputs[] = {
-    "01_quadrado2009_mst.dot",
-    "02_DONI22009_mst.dot",
-    "03_serrinha2009_mst.dot",
-    "04_palmeiras2008_mst.dot",
-    "05_DONI12009_mst.dot",
-    "06_DONI12009_mst.dot"
+    //"01_quadrado2009_mst.dot",
+    //"02_DONI22009_mst.dot",
+    //"03_serrinha2009_mst.dot",
+    //"04_palmeiras2008_mst.dot",
+    //"05_DONI12009_mst.dot",
+    //"06_DONI12009_mst.dot"
+    "5diamonds.grf",
+    "Euclid301.GRF",
+    "Euclid303.txt",
+    "Euclid306.txt",
+    "P20.GRF",
+    "P22.GRF",
+    "PEARN01.grf"
 };
 
 vector<Edge> (*make_mst[])(Graph&) = {kruskal, prim, boruvka, NULL};
@@ -48,7 +62,7 @@ string algorithm[] = {"kruskal", "prim", "boruvka"};
 
 class GraphMstTest : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE( GraphMstTest );
-    CPPUNIT_TEST( testMst );
+    //CPPUNIT_TEST( testMst );
     CPPUNIT_TEST( testMstMaxDegree );
     CPPUNIT_TEST_SUITE_END();
 
@@ -98,35 +112,25 @@ public:
                 CPPUNIT_ASSERT_EQUAL_MESSAGE(inputs[j].path,
                                              g.order() - 1, (int)v.size());
                 areSame(inputs[j].cost, weight(v).get_d());
-                // For some reason i got the following error when comparing double:
-                // equality assertion failed
-                // - Expected: 106.407933362449
-                // - Actual  : 106.407933362449
-                // And with cast fo float i get:
-                // - Expected: 255.9
-                // - Actual  : 255.9
-                // - input/05_DONI12009.txt
-                // WTF !!!!!!!!
             }
         }
     }
     void testMstMaxDegree() {
-        int max_degree, max_max_degree;
+        int max_degree;
         for(int i = 0; make_dcmst[i]; ++i) {
+            printf("%s (max degree: 2)\n", algorithm[i].c_str());
             for (int j = 0; inputs[j].path != NULL; ++j) {
-                Graph g = getGraph(inputs[j].path);
-                vector<Edge>v = make_mst[i](g);
-                max_max_degree = getMaxDegree(v, g.order());
-                for(max_degree = 2; max_degree <= max_max_degree; ++max_degree) {
+                for(max_degree = 2; max_degree <= 2; ++max_degree) {
+                    char degree_str[64];
                     clock_t start = clock();
-                    printf("%s (max degree: %d)\n", algorithm[i].c_str(), max_degree);
                     printf("Input [%s]:\n", inputs[j].path);
                     Graph g = getGraph(inputs[j].path);
                     vector<Edge>v = make_dcmst[i](g, max_degree);
                     printf("    Time elapsed = [%lf], ", ((double)clock() - start) / CLOCKS_PER_SEC);
                     printf("Forest_size = [%d], ", (int)(g.order() - v.size()));
                     printf("Weight = [%s]\n", Graph::mpfToString(weight(v)).c_str());
-                    Graph::to_dot(v, (algorithm[i] + "dcmst" + outputs[j]).c_str());
+                    sprintf(degree_str, "_%d", max_degree);
+                    Graph::to_dot(v, (outputs[j] + "_dcmst_" + algorithm[i] + degree_str + ".dot").c_str());
                     CPPUNIT_ASSERT(getMaxDegree(v, g.order()) <= max_degree);
                 }
             }
