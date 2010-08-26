@@ -12,6 +12,7 @@
 \usepackage{verbatim}
 \usepackage{a4wide}
 \usepackage{sty/macros}
+\usepackage{float}
 
 \title{II NPC de PAA}
 \author{ Renato Aguiar \and Tiago Justino }
@@ -21,7 +22,6 @@
 	$\cdots$ \\
 	\today
 }
-
 
 \begin{document}
 
@@ -55,6 +55,7 @@ cada componente pode ocorrer em paralelo.
 \section{Projeto de Árvores Geradoras com Restrições}
 
 \subsection{Para o conjunto de dados de sua prova, mostre as topologias finais e
+\label{2a}
 os custos das AGM usando dos métdos distintos de construção de AGM com restrição
 de grau ($\delta=2$). Comente as diferençás encontradas.}
 
@@ -78,6 +79,11 @@ verifique entre os métodos implementados com restrição de grau ($\delta_{max}
 3, 4$), os tempos de processamento, custos atingidos e topologia, qual o de
 melhor de melhor desempenho, custo e comente seus resultados.}
 
+Novamente, semelhante a questão \ref{2a}, os dois algoritmos (Prim e Kruskal)
+foram igualmente performáticos, executando em menos de 0.01 segundos, para as
+instâncias utilizadas e, novamente, a adaptação do kruskal apresentou uma
+aproximação melhor da resposta ótima.
+
 \input{3a.tex}
 
 \section{Anexo: Figuras}
@@ -96,6 +102,18 @@ melhor de melhor desempenho, custo e comente seus resultados.}
 \fig[.6]{P22_GRF_dcmst_prim_2}{P22\_GRF\_dcmst\_prim\_2}
 \fig[.6]{PEARN01_grf_dcmst_kruskal_2}{PEARN01\_grf\_dcmst\_kruskal\_2}
 \fig[.6]{PEARN01_grf_dcmst_prim_2}{PEARN01\_grf\_dcmst\_prim\_2}
+\fig[.6]{Euclid301_GRF_dcmst_kruskal_3}{Euclid301\_GRF\_dcmst\_kruskal\_3}
+\fig[.6]{Euclid301_GRF_dcmst_kruskal_4}{Euclid301\_GRF\_dcmst\_kruskal\_4}
+\fig[.6]{Euclid303_txt_dcmst_kruskal_3}{Euclid303\_txt\_dcmst\_kruskal\_3}
+\fig[.6]{Euclid303_txt_dcmst_kruskal_4}{Euclid303\_txt\_dcmst\_kruskal\_4}
+\fig[.6]{Euclid306_txt_dcmst_kruskal_3}{Euclid306\_txt\_dcmst\_kruskal\_3}
+\fig[.6]{Euclid306_txt_dcmst_kruskal_4}{Euclid306\_txt\_dcmst\_kruskal\_4}
+\fig[.6]{Euclid301_GRF_dcmst_prim_3}{Euclid301\_GRF\_dcmst\_prim\_3}
+\fig[.6]{Euclid301_GRF_dcmst_prim_4}{Euclid301\_GRF\_dcmst\_prim\_4}
+\fig[.6]{Euclid303_txt_dcmst_prim_3}{Euclid303\_txt\_dcmst\_prim\_3}
+\fig[.6]{Euclid303_txt_dcmst_prim_4}{Euclid303\_txt\_dcmst\_prim\_4}
+\fig[.6]{Euclid306_txt_dcmst_prim_3}{Euclid306\_txt\_dcmst\_prim\_3}
+\fig[.6]{Euclid306_txt_dcmst_prim_4}{Euclid306\_txt\_dcmst\_prim\_4}
 
 \end{document}
 
